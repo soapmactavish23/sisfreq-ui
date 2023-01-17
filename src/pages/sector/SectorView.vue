@@ -92,7 +92,7 @@ import { FilterMatchMode } from "primevue/api";
 import Sector from "../../models/sector";
 
 //Services
-import SectorService from "../../service/sector/sector";
+import SectorService from "../../service/sector/sector_service";
 
 //components
 import DialogForm from "./components/dialog-form.vue";

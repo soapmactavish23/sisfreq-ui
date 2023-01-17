@@ -46,7 +46,7 @@
 import Permission from "../../../models/permission";
 
 //Services
-import PermissionService from "../../../service/permission/permission";
+import PermissionService from "../../../service/permission/permission_service";
 
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";

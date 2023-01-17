@@ -82,7 +82,7 @@ import { FilterMatchMode } from "primevue/api";
 import Permission from "../../models/permission";
 
 //Services
-import PermissionService from "../../service/permission/permission";
+import PermissionService from "../../service/permission/permission_service";
 
 //components
 import DialogForm from "./components/dialog-form.vue";

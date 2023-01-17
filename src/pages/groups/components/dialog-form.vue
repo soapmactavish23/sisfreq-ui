@@ -104,7 +104,7 @@ import Groups from "../../../models/groups";
 //Services
 import GroupsService from "../../../service/group/group_service";
 import Services from "../../../service/service/service";
-import PermissionService from "../../../service/permission/permission";
+import PermissionService from "../../../service/permission/permission_service";
 
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";

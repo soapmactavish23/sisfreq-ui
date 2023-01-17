@@ -66,7 +66,7 @@
 import Sector from "../../../models/sector";
 
 //Services
-import SectorService from "../../../service/sector/sector";
+import SectorService from "../../../service/sector/sector_service";
 import LocalService from "../../../service/local/local";
 
 //VALIDATIONS
