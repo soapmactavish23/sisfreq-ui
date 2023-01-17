@@ -16,6 +16,21 @@ export default class Token extends Config {
     };
   }
 
+  findById(id) {
+    return new Promise((resolve, reject) => {
+      axios({
+        method: "get",
+        url: this.api_url + this.pathUrl + `/${id}`,
+        withCredentials: true,
+        headers: {
+          Authorization: "Bearer " + this.token(),
+        },
+      })
+        .then((res) => resolve(res.data))
+        .catch((err) => reject(err));
+    });
+  }
+
   findAll() {
     return new Promise((resolve, reject) => {
       if (this.accessMethods.r) {
