@@ -1,43 +1,38 @@
+import { required, maxLength } from "@vuelidate/validators";
 export default class Setor {
 
     constructor() {
-    this.id = null;
-    this.tipoSetor = null;
-    this.sigla = null;
-    this.nome = null;
-    this.ativo = null;
-    this.dataCadastro = null;
-    this.dataModificacao = null;    
+        this.id = null;
+        this.tipoSetor = null;
+        this.sigla = null;
+        this.nome = null;
+        this.ativo = null;
+        this.dataCadastro = null;
+        this.dataModificacao = null;
 
     }
     validations() {
         return {
-            idsetor: {
-                required,
-                maxLength: maxLength(10),
+            sigla: {
+                maxLength: maxLength(20),
             },
             nome: {
                 required,
                 maxLength: maxLength(100),
             },
-            tipo_setor: {
+            tipoSetor: {
                 required,
-                maxLength: maxLength(100),
+                maxLength: maxLength(20),
             },
             ativo: {
                 required,
-                maxLength: maxLength(2),
+                maxLength: maxLength(3),
             },
-            dt_cadastro: {
-                id: {
-                    required,
-                    maxLength: maxLength(10),
-                }
+            dataCadastro: {
+                required,
             },
-            dt_modificacao: {
-                id: {
-                    required,
-                }
+            dataModificacao: {
+                required,
             },
         };
     }
