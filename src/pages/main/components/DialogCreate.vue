@@ -152,7 +152,7 @@ export default {
   data() {
     return {
       person: new Person(),
-      user: new Users(),
+      user: new Usuario(),
       submitted: false,
       confirmPasword: null,
       userService: new UsersService(),
@@ -231,7 +231,7 @@ export default {
     },
     hideDialog() {
       this.person = new Person();
-      this.user = new Users();
+      this.user = new Usuario();
       this.submitted = false;
       this.typeSearch = false;
       this.showDetails = false;
