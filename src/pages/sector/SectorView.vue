@@ -13,10 +13,7 @@
           </template>
           <template #end>
             <div
-              class="
-                table-header
-                p-d-flex p-flex-column p-flex-md-row p-jc-md-between
-              "
+              class="table-header p-d-flex p-flex-column p-flex-md-row p-jc-md-between"
             >
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
@@ -43,19 +40,40 @@
           <template #empty>
             <div class="p-text-center">Nenhum resultado encontrado...</div>
           </template>
-          <Column header="Nome" field="name" :sortable="true">
+          <Column header="Nome" field="nome" :sortable="true">
             <template #body="slotProps">
-              {{ slotProps.data.name }}
+              {{ slotProps.data.nome }}
             </template>
           </Column>
-          <Column header="Sigla" field="acronym" :sortable="true">
+          <Column header="Sigla" field="sigla" :sortable="true">
             <template #body="slotProps">
-              {{ slotProps.data.acronym }}
+              {{ slotProps.data.sigla }}
             </template>
           </Column>
-          <Column header="Local" field="local" :sortable="true">
+          <Column header="Tipo Setor" field="tipoSetor" :sortable="true">
             <template #body="slotProps">
-              {{ slotProps.data.local.name }}
+              {{ slotProps.data.tipoSetor }}
+            </template>
+          </Column>
+          <Column field="ativo" header="Ativo" ref="ativo">
+            <template #body="slotProps">
+              <span class="p-column-title">Ativo:</span>
+              <span
+                v-if="slotProps.data.ativo === true"
+                :class="'user-badge status-' + slotProps.data.ativo"
+                @click="changeStatus(slotProps.data)"
+                v-tooltip.top="'Clique para INATIVAR'"
+                style="cursor: pointer"
+                >Ativo</span
+              >
+              <span
+                v-if="slotProps.data.ativo === false"
+                :class="'user-badge status-' + slotProps.data.ativo"
+                @click="changeStatus(slotProps.data)"
+                v-tooltip.top="'CLIQUE ATIVAR'"
+                style="cursor: pointer"
+                >Inativo</span
+              >
             </template>
           </Column>
           <Column header="Ações">
@@ -89,7 +107,7 @@
 import { FilterMatchMode } from "primevue/api";
 
 //models
-import Sector from "../../models/sector";
+import Setor from "../../models/setor";
 
 //Services
 import SectorService from "../../service/sector/sector_service";
@@ -105,7 +123,7 @@ export default {
     return {
       loading: false,
       sectors: [],
-      sector: new Sector(),
+      sector: new Setor(),
       permissoes: [],
       filters: {},
       filtersPermissions: {},
@@ -120,8 +138,22 @@ export default {
   },
   methods: {
     showCreate() {
-      this.sector = new Sector();
+      this.sector = new Setor();
       this.$store.state.views.sector.dialogForm = true;
+    },
+    changeStatus(sector) {
+      this.sector = sector;
+      this.sector.ativo = !this.sector.ativo;
+      this.sectorService
+        .update(this.sector)
+        .then((data) => {
+          this.$msgSuccess(data);
+          this.findAll();
+        })
+        .catch((error) => {
+          this.$msgErro(error);
+          console.error(error);
+        });
     },
     showUpdate(sector) {
       this.sector = sector;

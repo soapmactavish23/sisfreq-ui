@@ -12,11 +12,11 @@ const routes = [
         name: "dashboard",
         component: () => import("./pages/main/Home.vue"),
       },
-      // {
-      //   path: "/sectors",
-      //   name: "sectors",
-      //   component: () => import("./pages/sector/SectorView.vue"),
-      // },
+      {
+        path: "/sectors",
+        name: "sectors",
+        component: () => import("./pages/sector/SectorView.vue"),
+      },
       // {
       //   path: "/permissions",
       //   name: "permissions",

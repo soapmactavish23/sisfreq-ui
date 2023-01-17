@@ -8,42 +8,35 @@
     class="p-fluid"
   >
     <div class="field">
-      <label for="name">Nome</label>
+      <label for="nome">Nome</label>
       <InputText
-        id="name"
-        v-model="v$.sector.name.$model"
-        maxlength="255"
+        id="nome"
+        v-model="v$.sector.nome.$model"
+        maxlength="100"
         placeholder="Digite o nome do setor"
-        :class="{ 'p-invalid': submitted && v$.sector.name.$invalid }"
+        :class="{ 'p-invalid': submitted && v$.sector.nome.$invalid }"
       />
-      <small class="p-error" v-if="submitted && v$.sector.name.$invalid"
+      <small class="p-error" v-if="submitted && v$.sector.nome.$invalid"
         >Nome do setor é obrigatório.</small
       >
     </div>
     <div class="field">
-      <label for="acronym">Sigla</label>
+      <label for="sigla">Sigla</label>
       <InputText
-        id="acronym"
-        v-model="sector.acronym"
-        maxlength="50"
+        id="sigla"
+        v-model="sector.sigla"
+        maxlength="20"
         placeholder="Digite a sigla do setor"
       />
     </div>
     <div class="field">
-      <label for="local">Local</label>
-      <Dropdown
-        id="local"
-        v-model="v$.sector.local.$model"
-        optionLabel="name"
-        :options="locals"
-        placeholder="Selecione o local"
-        :class="{
-          'p-invalid': submitted && v$.sector.local.$invalid,
-        }"
+      <label for="tipoSetor">Tipo do Setor</label>
+      <InputText
+        id="tipoSetor"
+        v-model="sector.tipoSetor"
+        maxlength="20"
+        placeholder="Digite a tipo do setor"
       />
-      <small class="p-error" v-if="submitted && v$.sector.local.$invalid"
-        >Local é obrigatório.</small
-      >
     </div>
     <template #footer>
       <Button
@@ -63,11 +56,10 @@
 </template>
 <script>
 //Models
-import Sector from "../../../models/sector";
+import Setor from "../../../models/setor";
 
 //Services
 import SectorService from "../../../service/sector/sector_service";
-import LocalService from "../../../service/local/local";
 
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";
@@ -79,20 +71,14 @@ export default {
   },
   data() {
     return {
-      sector: new Sector(),
+      sector: new Setor(),
       submitted: false,
       sectorService: new SectorService(),
-      locals: [],
-      localService: new LocalService(),
     };
-  },
-  created() {},
-  mounted() {
-    this.findLocals();
   },
   validations() {
     return {
-      sector: new Sector().validations(),
+      sector: new Setor().validations(),
     };
   },
   computed: {
@@ -109,6 +95,7 @@ export default {
   },
   methods: {
     send(isFormValid) {
+      //TODO: SEND SECTOR
       this.submitted = true;
       if (isFormValid) {
         if (this.sector.id) {
@@ -158,16 +145,8 @@ export default {
           this.$msgErro(error);
         });
     },
-    findLocals() {
-      this.localService
-        .findAll()
-        .then((response) => {
-          this.locals = response;
-        })
-        .catch((error) => this.$msgErro(error));
-    },
     hideDialog() {
-      this.sector = new Sector();
+      this.sector = new Setor();
       this.submitted = false;
       this.$emit("findAll");
       this.visibleDialog = false;
