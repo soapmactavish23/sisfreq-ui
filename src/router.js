@@ -22,21 +22,21 @@ const routes = [
       //   name: "permissions",
       //   component: () => import("./pages/permission/PermissionView.vue"),
       // },
-      // {
-      //   path: "/users",
-      //   name: "users",
-      //   component: () => import("./pages/users/UsersView.vue"),
-      // },
-      // {
-      //   path: "/groups",
-      //   name: "groups",
-      //   component: () => import("./pages/groups/GroupsView.vue"),
-      // },
-      // {
-      //   path: "/profile",
-      //   name: "profile",
-      //   component: () => import("./pages/profile/ProfileView.vue"),
-      // },
+      {
+        path: "/users",
+        name: "users",
+        component: () => import("./pages/users/UsersView.vue"),
+      },
+      {
+        path: "/groups",
+        name: "groups",
+        component: () => import("./pages/groups/GroupsView.vue"),
+      },
+      {
+        path: "/profile",
+        name: "profile",
+        component: () => import("./pages/profile/ProfileView.vue"),
+      },
     ],
   },
   {

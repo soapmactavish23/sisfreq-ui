@@ -53,104 +53,27 @@ export default {
           ],
         },
         {
-          label: "Administração do Sistema",
-          visible: () => {
-            if (this.findPermission("ROLE_INTRANET_CADASTRAR_CAT_SERVICO")) {
-              return true;
-            } else if (this.findPermission("ROLE_INTRANET_CADASTRAR_SERVICO")) {
-              return true;
-            } else if (this.findPermission("ROLE_INTRANET_CADASTRAR_BANNER")) {
-              return true;
-            } else {
-              return false;
-            }
-          },
+          label: "Funcionários e Frequencias",
           items: [
             {
-              label: "Gerenciamento de Serviços",
-              icon: "pi pi-fw pi-cog",
-              to: "/services",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_SERVICO");
-              },
-            },
-            {
-              label: "Gerenciamento de Categoria de Serviços",
-              icon: "pi pi-fw pi-clone",
-              to: "/category-services",
-              visible: () => {
-                return this.findPermission(
-                  "ROLE_INTRANET_CADASTRAR_CAT_SERVICO"
-                );
-              },
-            },
-            {
-              label: "Gerenciamento de Banners",
-              icon: "pi pi-fw pi-image",
-              to: "/banner",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_BANNER");
-              },
-            },
-          ],
-        },
-        {
-          label: "Coordenação",
-          visible: () => {
-            if (this.findPermission("ROLE_INTRANET_PESQUISAR_PESSOA")) {
-              return true;
-            } else if (this.findPermission("ROLE_INTRANET_CADASTRAR_GENERO")) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-          items: [
-            {
-              label: "Gerenciamento de Pessoas",
+              label: "Gerenciamento de Funcionarios",
               icon: "pi pi-fw pi-users",
-              to: "/persons",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_PESQUISAR_PESSOA");
-              },
+              to: "/funcionarios",
             },
             {
-              label: "Gerenciamento de Gêneros",
-              icon: "pi pi-fw pi-clone",
-              to: "/genders",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_GENERO");
-              },
+              label: "Gerenciamento de Frequência",
+              icon: "pi pi-fw pi-calendar",
+              to: "/frequencias",
             },
           ],
         },
         {
           label: "Gerenciamento de Setores",
-          visible: () => {
-            if (this.findPermission("ROLE_INTRANET_CADASTRAR_SETOR")) {
-              return true;
-            } else if (this.findPermission("ROLE_INTRANET_CADASTRAR_LOCAL")) {
-              return true;
-            } else {
-              return false;
-            }
-          },
           items: [
             {
               label: "Gerenciamento de Setores",
               icon: "pi pi-fw pi-users",
               to: "/sectors",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_SETOR");
-              },
-            },
-            {
-              label: "Gerenciamento de Locais",
-              icon: "pi pi-fw pi-clone",
-              to: "/locals",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_LOCAL");
-              },
             },
           ],
         },
@@ -162,7 +85,7 @@ export default {
               icon: "pi pi-fw pi-users",
               to: "/users",
               visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_USUARIO");
+                return this.findPermission("ROLE_CADASTRAR_USUARIO");
               },
             },
 
@@ -170,17 +93,6 @@ export default {
               label: "Gerenciamento de Grupos",
               icon: "pi pi-fw pi-list",
               to: "/groups",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_GRUPO");
-              },
-            },
-            {
-              label: "Gerenciamento de Permissões",
-              icon: "pi pi-fw pi-cog",
-              to: "/permissions",
-              visible: () => {
-                return this.findPermission("ROLE_INTRANET_CADASTRAR_PERMISSAO");
-              },
             },
             {
               label: "Alterar Senha",

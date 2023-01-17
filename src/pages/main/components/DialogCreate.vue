@@ -133,7 +133,7 @@
 </template>
 <script>
 //Models
-import Users from "../../../models/usuarios";
+import Usuario from "../../../models/usuario";
 
 //Services
 import UsersService from "../../../service/user/user_service";
