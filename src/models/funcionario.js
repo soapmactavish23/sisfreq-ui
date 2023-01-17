@@ -66,6 +66,9 @@ export default class Funcionario {
             banco: {
                 maxLength: maxLength(20),
             },
+            agencia: {
+                maxLength: maxLength(10),
+            },
             conta: {
                 maxLength: maxLength(10),
             },
