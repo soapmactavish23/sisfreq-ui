@@ -10,4 +10,30 @@ export default class Setor {
     this.dataModificacao = null;    
 
     }
+    validations() {
+        return {
+            idsetor: {
+                required,
+            },
+            nome: {
+                required,
+            },
+            tipo_setor: {
+                required,
+            },
+            ativo: {
+                required,
+            },
+            dt_cadastro: {
+                id: {
+                    required,
+                }
+            },
+            dt_modificacao: {
+                id: {
+                    required,
+                }
+            },
+        };
+    }
 }
