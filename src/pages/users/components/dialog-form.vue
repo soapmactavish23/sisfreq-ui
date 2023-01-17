@@ -140,12 +140,11 @@
 </template>
 <script>
 //Models
-import Users from "../../../models/usuarios";
+import Usuario from "../../../models/usuario";
 
 //Services
 import UsersService from "../../../service/user/user_service";
 import GroupService from "../../../service/group/group_service";
-import PersonService from "../../../service/persons/person_service";
 
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";
@@ -162,7 +161,6 @@ export default {
       confirmPassword: null,
       userService: new UsersService(),
       groupService: new GroupService(),
-      personService: new PersonService(),
       groups: [],
     };
   },
