@@ -185,7 +185,7 @@ export default {
         rejectLabel: "Não",
         accept: () => {
           this.service
-            .delete(obj.id)
+            .delete(obj.id) 
             .then((data) => {
               this.$msgSuccess(data);
               this.findAll();
@@ -194,7 +194,7 @@ export default {
               this.$msgErro(error);
             });
         },
-      }); 
+      });   
     },
     loadLazyData() {
       this.loading = true;
@@ -222,6 +222,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped> 
 @import url("../../App.scss");
 </style>

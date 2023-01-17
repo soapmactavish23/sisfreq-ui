@@ -55,6 +55,9 @@ export default class Funcionario {
         required,
         maxLength: maxLength(20),
       },
+      dataDesligamento: {},
+      dataInicioAfastamento: {},
+      dataFimAfastamento: {},
       tipoAfastamento: {
         maxLength: maxLength(10),
       },
