@@ -1,3 +1,5 @@
+import Setor from "./setor";
+import { required, maxLength } from "@vuelidate/validators";
 export default class Funcionario {
 
     constructor() {
@@ -20,5 +22,59 @@ export default class Funcionario {
         this.dataCadastro = null;
         this.dataModificacao = null;
     }
-
+    validations() {
+        return {
+            lotacao: {
+                required,
+                maxLength: maxLength(10),
+            },
+            atuacao: {
+                required,
+                maxLength: maxLength(10),
+            },
+            cpf: {
+                maxLength: maxLength(15),
+            },
+            matricula: {
+                required,
+                maxLength: maxLength(15),
+            },
+            vinculo: {
+                required,
+                maxLength: maxLength(10),
+            },
+            nome: {
+                required,
+                maxLength: maxLength(100),
+            },
+            horarioTrabalho: {
+                maxLength: maxLength(25),
+            },
+            situacao: {
+                required,
+                maxLength: maxLength(20),
+            },
+            tipoAfastamento: {
+                maxLength: maxLength(10),
+            },
+            dataCadastro: {
+                required,
+            },
+            dataModificacao: {
+                required,
+            },
+            banco: {
+                maxLength: maxLength(20),
+            },
+            conta: {
+                maxLength: maxLength(10),
+            },
+            funcionario: {
+                id: {
+                    required,
+                    maxLength: maxLength(10),
+                }
+            },
+        };
+    }
 }
