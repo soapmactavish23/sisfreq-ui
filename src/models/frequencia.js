@@ -18,5 +18,4 @@ export default class Frequecia {
         this.funcionario = new Funcionario();
         this.setorOrigem = new Setor();
     }
-
 }
