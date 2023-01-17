@@ -73,10 +73,7 @@ export default class Funcionario {
                 maxLength: maxLength(10),
             },
             funcionario: {
-                id: {
-                    required,
-                    maxLength: maxLength(10),
-                }
+                required,
             },
         };
     }

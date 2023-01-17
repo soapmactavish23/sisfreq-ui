@@ -56,16 +56,11 @@ export default class Frequecia {
                 required,
             },
             setorOrigem: {
-                id: {
-                    required,
-                    maxLength: maxLength(10),
-                }
+                required,
             },
             funcionario: {
-                id: {
-                    required,
-                    maxLength: maxLength(10),
-                }
+                required,
+
             },
         };
     }
