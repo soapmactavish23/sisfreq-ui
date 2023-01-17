@@ -1,5 +1,5 @@
 import Funcionario from "./funcionario";
-
+import { required, maxLength } from "@vuelidate/validators";
 export default class SalarioBloqueado {
 
     constructor() {
@@ -20,9 +20,26 @@ export default class SalarioBloqueado {
         return {
             ano: {
                 required,
+                maxLength: maxLength(10),
             },
             mes: {
                 required,
+                maxLength: maxLength(10),
+            },
+            banco: {
+                maxLength: maxLength(20),
+            },
+            agencia: {
+                maxLength: maxLength(10),
+            },
+            conta: {
+                maxLength: maxLength(10),
+            },
+            valorSalario: {
+                maxLength: maxLength(10),
+            },
+            observacao: {
+                maxLength: maxLength(100),
             },
             dataCadastro: {
                 required,
@@ -33,6 +50,7 @@ export default class SalarioBloqueado {
             funcionario: {
                 id: {
                     required,
+                    maxLength: maxLength(10),
                 }
             },
         };
