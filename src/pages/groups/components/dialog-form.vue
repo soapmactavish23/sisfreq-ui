@@ -181,9 +181,9 @@ export default {
     },
     allPermissoes() {
       if (this.selectedAllPermissoes === false) {
-        this.groups.permission = this.permissoes;
+        this.groups.permissoes = this.permissoes;
       } else {
-        this.groups.permission = null;
+        this.groups.permissoes = null;
       }
     },
     findAllPermissions() {
