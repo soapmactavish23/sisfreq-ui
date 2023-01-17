@@ -44,12 +44,6 @@
 
               <div class="flex align-items-center justify-content-between mb-5">
                 <a
-                  class="font-medium no-underline ml-2 text-left cursor-pointer"
-                  style="color: var(--primary-color)"
-                  @click="onCreateUser"
-                  >Cadastrar-se</a
-                >
-                <a
                   class="
                     font-medium
                     no-underline
@@ -93,28 +87,22 @@
 
 <script>
 //Models
-import Users from "../../models/usuarios";
+import Usuario from "../../models/usuario";
 
 //Services
 import AuthService from "../../service/auth/auth_service";
 
 //Components
-// import AppConfig from "../../components/menu/AppConfig.vue";
-// import Carrousel from "./components/Carrousel.vue";
-// import DialogCreate from "./components/DialogCreate.vue";
 import DialogFoggetPassword from "./components/DialogFoggetPassword.vue";
 
 export default {
   components: {
-    // AppConfig,
-    // Carrousel,
-    // DialogCreate,
     DialogFoggetPassword,
   },
   data() {
     return {
       authService: new AuthService(),
-      user: new Users(),
+      user: new Usuario(),
     };
   },
   created() {

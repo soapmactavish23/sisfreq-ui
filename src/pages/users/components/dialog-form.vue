@@ -157,7 +157,7 @@ export default {
   },
   data() {
     return {
-      user: new Users(),
+      user: new Usuario(),
       submitted: false,
       confirmPassword: null,
       userService: new UsersService(),
@@ -171,7 +171,7 @@ export default {
   },
   validations() {
     return {
-      user: new Users().validations(),
+      user: new Usuario().validations(),
     };
   },
   computed: {
@@ -237,7 +237,7 @@ export default {
         });
     },
     hideDialog() {
-      this.user = new Users();
+      this.user = new Usuario();
       this.confirmPassword = null;
       this.submitted = false;
       this.$emit("findAll");

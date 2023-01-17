@@ -111,7 +111,7 @@
 
 <script>
 //Models
-import Users from "../../models/usuarios";
+import Usuario from "../../models/usuario";
 
 //Services
 import UsersService from "../../service/user/user_service";
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       userService: new UsersService(),
-      user: new Users(),
+      user: new Usuario(),
       loading: false,
       totalRecords: 0,
       customers: null,
@@ -153,7 +153,7 @@ export default {
   },
   methods: {
     showCreate() {
-      this.user = new Users();
+      this.user = new Usuario();
       this.$store.state.views.users.dialogForm = true;
     },
     showUpdate(user) {
