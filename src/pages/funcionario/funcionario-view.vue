@@ -118,12 +118,12 @@
   </div>
 
   <!--MODAL CADASTRAR-->
-  <dialog-form :objSelected="obj" @findAll="findAll" />
+  <dialog-form :objSelected="obj" @findAll="loadLazyData" />
   <!--FIM MODAL CADASTRAR-->
 </template>
 
 <script>
-// import { FilterMatchMode } from "primevue/api";
+// import { FilterMatchMode } from "primevue/api";  
 
 //models
 import Funcionario from "../../models/funcionario";
@@ -194,7 +194,7 @@ export default {
               this.$msgErro(error);
             });
         },
-      });
+      }); 
     },
     loadLazyData() {
       this.loading = true;
@@ -212,7 +212,7 @@ export default {
       this.lazyParams = event;
       this.loadLazyData();
     },
-    onFilter(event) {
+    onFilter(event) { 
       this.lazyParams.nome = event.filters.nome.value;
       this.lazyParams.cpf = event.filters.cpf.value;
       this.lazyParams.matricula = event.filters.matricula.value;
