@@ -6,120 +6,92 @@
     :modal="true"
     @hide="hideDialog"
   >
-    <div class="p-fluid formgrid grid">
-      <Fieldset legend="Pessoa" class="col-12">
-        <div class="field">
-          <label for="matricula">Matrícula / CPF</label>
-          <InputText
-            id="matricula"
-            v-model="v$.user.person.credential.$model"
-            placeholder="Informe a matrícula ou o CPF."
-            @change="getPerson"
-            :class="{
-              'p-invalid': submitted && v$.user.person.credential.$invalid,
-            }"
-          />
-          <small
-            class="p-error"
-            v-if="submitted && v$.user.person.credential.$invalid"
-            >Matrícula/CPF é obrigatório.</small
-          >
-        </div>
-        <Chip
-          :label="user.person.name + ' - ' + user.person.cpf"
-          v-if="user.person.id"
+    <div class="p-fluid formgrid grid p-2">
+      <div class="field col-12 md:col-6">
+        <label for="nome">Nome</label>
+        <InputText
+          id="nome"
+          v-model="v$.user.nome.$model"
+          maxlength="255"
+          placeholder="Digite o nome"
+          :class="{
+            'p-invalid': submitted && v$.user.nome.$invalid,
+          }"
         />
-      </Fieldset>
-      <Fieldset legend="Usuário" class="col-12 mt-5">
-        <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-6">
-            <label for="login">Login</label>
-            <InputText
-              id="login"
-              v-model="v$.user.login.$model"
-              maxlength="255"
-              placeholder="Digite o login"
-              :class="{
-                'p-invalid': submitted && v$.user.login.$invalid,
-              }"
-            />
-            <small class="p-error" v-if="submitted && v$.user.login.$invalid"
-              >Login é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6">
-            <label for="email">E-mail</label>
-            <InputText
-              id="email"
-              v-model="v$.user.email.$model"
-              maxlength="255"
-              placeholder="Digite o e-mail"
-              :class="{ 'p-invalid': submitted && v$.user.email.$invalid }"
-            />
-            <small
-              v-if="submitted && v$.user.email.email.$invalid"
-              class="p-invalid"
-              >Email inválido</small
-            >
-            <small
-              class="p-error"
-              v-else-if="submitted && v$.user.email.$invalid"
-              >Email é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6" v-if="!user.id">
-            <label for="password">Senha</label>
-            <InputText
-              id="password"
-              v-model="v$.user.password.$model"
-              maxlength="255"
-              placeholder="Digite sua senha"
-              :class="{ 'p-invalid': submitted && !v$.user.password.$model }"
-            />
-            <small v-if="submitted && !v$.user.password.$model" class="p-error"
-              >Senha é obrigatório.</small
-            >
-            <small
-              v-else-if="submitted && v$.user.password.minLength.$invalid"
-              class="p-error"
-              >A senha deve ter no mínimo 6 caracteres</small
-            >
-          </div>
-          <div class="field col-12 md:col-6" v-if="!user.id">
-            <label for="password">Confirmar senha</label>
-            <InputText
-              id="password"
-              v-model="confirmPassword"
-              maxlength="255"
-              placeholder="Confirme sua senha"
-              :class="{
-                'p-invalid': submitted && confirmPassword !== user.password,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && confirmPassword !== user.password"
-              >As senhas devem ser iguais</small
-            >
-          </div>
-          <div class="field col-12">
-            <label for="group">Grupos</label>
-            <MultiSelect
-              id="group"
-              v-model="v$.user.group.$model"
-              :options="groups"
-              optionLabel="description"
-              placeholder="Selecione um grupo"
-              :class="{
-                'p-invalid': submitted && v$.user.group.$invalid,
-              }"
-            />
-            <small class="p-error" v-if="submitted && v$.user.group.$invalid"
-              >Grupo é obrigatório.</small
-            >
-          </div>
-        </div>
-      </Fieldset>
+        <small class="p-error" v-if="submitted && v$.user.nome.$invalid"
+          >Nome é obrigatório.</small
+        >
+      </div>
+      <div class="field col-12 md:col-6">
+        <label for="email">E-mail</label>
+        <InputText
+          id="email"
+          v-model="v$.user.email.$model"
+          maxlength="255"
+          placeholder="Digite o e-mail"
+          :class="{ 'p-invalid': submitted && v$.user.email.$invalid }"
+        />
+        <small
+          v-if="submitted && v$.user.email.email.$invalid"
+          class="p-invalid"
+          >Email inválido</small
+        >
+        <small class="p-error" v-else-if="submitted && v$.user.email.$invalid"
+          >Email é obrigatório.</small
+        >
+      </div>
+      <div class="field col-12 md:col-6" v-if="!user.id">
+        <label for="senha">Senha</label>
+        <InputText
+          id="senha"
+          v-model="v$.user.senha.$model"
+          maxlength="255"
+          placeholder="Digite sua senha"
+          :class="{ 'p-invalid': submitted && !v$.user.senha.$model }"
+        />
+        <small v-if="submitted && !v$.user.senha.$model" class="p-error"
+          >Senha é obrigatório.</small
+        >
+        <small
+          v-else-if="submitted && v$.user.senha.minLength.$invalid"
+          class="p-error"
+          >A senha deve ter no mínimo 6 caracteres</small
+        >
+      </div>
+      <div class="field col-12 md:col-6" v-if="!user.id">
+        <label for="password">Confirmar senha</label>
+        <InputText
+          id="password"
+          v-model="confirmPassword"
+          maxlength="255"
+          placeholder="Confirme sua senha"
+          :class="{
+            'p-invalid': submitted && confirmPassword !== user.senha,
+          }"
+        />
+        <small
+          class="p-error"
+          v-if="submitted && confirmPassword !== user.senha"
+          >As senhas devem ser iguais</small
+        >
+      </div>
+      <div class="field col-12">
+        <!-- TODO: LIST GROUPS -->
+        <label for="grupo">Grupos</label>
+        <Dropdown
+          id="grupo"
+          v-model="v$.user.grupo.$model"
+          :options="groups"
+          optionLabel="description"
+          placeholder="Selecione um grupo"
+          :class="{
+            'p-invalid': submitted && v$.user.grupo.$invalid,
+          }"
+        />
+        <small class="p-error" v-if="submitted && v$.user.grupo.$invalid"
+          >Grupo é obrigatório.</small
+        >
+      </div>
     </div>
     <br />
     <template #footer>
@@ -216,7 +188,7 @@ export default {
         });
     },
     update() {
-      this.user.password = "12345678910";
+      this.user.senha = "12345678910";
       this.userService
         .update(this.user)
         .then((data) => {

@@ -31,10 +31,10 @@
         v-model:selection="selectedCustomers"
       >
         <Column
-          field="login"
-          header="Login"
+          field="nome"
+          header="Nome"
           filterMatchMode="startsWith"
-          ref="login"
+          ref="nome"
         >
           <template #filter="{ filterModel, filterCallback }">
             <InputText
@@ -42,21 +42,31 @@
               v-model="filterModel.value"
               @keydown.enter="filterCallback()"
               class="p-column-filter"
-              placeholder="Pesquisar por Login"
+              placeholder="Pesquisar por nome"
             />
           </template>
           <template #body="slotProps">
-            {{ slotProps.data.login }}
+            {{ slotProps.data.nome }}
           </template>
         </Column>
         <Column
-          field="person.name"
-          header="Nome"
+          field="email"
+          header="E-mail"
           filterMatchMode="startsWith"
-          ref="person.name"
+          ref="email"
         >
           <template #body="slotProps">
-            {{ slotProps.data.person.name }}
+            {{ slotProps.data.email }}
+          </template></Column
+        >
+        <Column
+          field="contato"
+          header="Contato"
+          filterMatchMode="startsWith"
+          ref="contato"
+        >
+          <template #body="slotProps">
+            {{ slotProps.data.contato }}
           </template></Column
         >
         <Column field="status" header="Status" ref="status">
@@ -133,7 +143,7 @@ export default {
       selectedCustomers: null,
       selectAll: false,
       filters: {
-        login: { value: "", matchMode: "contains" },
+        nome: { value: "", matchMode: "contains" },
       },
       lazyParams: {},
     };
