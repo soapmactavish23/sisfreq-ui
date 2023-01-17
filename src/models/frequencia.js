@@ -1,4 +1,5 @@
 import Funcionario from "./funcionario";
+import Setor from "./setor";
 export default class Frequecia {
 
     constructor() {
@@ -14,7 +15,6 @@ export default class Frequecia {
         this.dataInicioAfastamento = null;
         this.dataFimAfastamento = null;
         this.dataCadastro = null;
-        //TODO: SETOR
         this.funcionario = new Funcionario();
         this.setorOrigem = new Setor();
     }
