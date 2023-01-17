@@ -294,15 +294,12 @@
 
 <script>
 //Models
-import User from "../../models/usuarios";
-import Person from "../../models/person";
+// import User from "../../models/usuarios";
 
 //Services
 import AuthService from "../../service/auth/auth_service";
 import UserService from "../../service/user/user_service";
-import PersonService from "../../service/persons/person_service";
 import GroupService from "../../service/group/group_service";
-import GenderService from "../../service/gender/gender";
 import { getCep } from "../../service/utils/via_cep";
 
 //VALIDATIONS
@@ -318,9 +315,7 @@ export default {
       authService: new AuthService(),
       userService: new UserService(),
       groupService: new GroupService(),
-      genderService: new GenderService(),
-      personService: new PersonService(),
-      user: new User(),
+      user: {},
       groups: [],
       genders: [],
       getCep,
@@ -344,12 +339,11 @@ export default {
       let newDate = this.$DateTime.formatarDateInput(oldDate);
       this.user.person.dtBirdate = newDate;
     });
-    this.findGenders();
   },
   validations() {
     return {
       user: {
-        person: new Person().validations(),
+        person: {},
       },
     };
   },
@@ -371,30 +365,6 @@ export default {
       } else {
         return;
       }
-    },
-
-    findGenders() {
-      this.genderService
-        .findAll()
-        .then((response) => {
-          this.genders = response;
-        })
-        .catch((error) => this.$msgErro(error));
-    },
-
-    findAddress() {
-      this.getCep(this.user.person.address)
-        .then((address) => {
-          this.user.person.address = address;
-        })
-        .catch((err) => {
-          this.$toast.add({
-            severity: "error",
-            summary: "Alerta!",
-            detail: err,
-            life: 6000,
-          });
-        });
     },
   },
 };

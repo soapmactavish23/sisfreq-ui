@@ -21,22 +21,6 @@
       >
     </div>
 
-    <div class="field">
-      <label for="service">Serviço</label>
-      <Dropdown
-        id="service"
-        v-model="v$.groups.service.$model"
-        optionLabel="name"
-        :options="services"
-        placeholder="Selecione o serviço"
-        :class="{
-          'p-invalid': submitted && v$.groups.service.$invalid,
-        }"
-      />
-      <small class="p-error" v-if="submitted && v$.groups.service.$invalid"
-        >Serviço é obrigatório.</small
-      >
-    </div>
     <label for="nome">Permissões do Grupo</label>
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-col-12" style="padding: 5px">
@@ -99,11 +83,10 @@
 </template>
 <script>
 //Models
-import Groups from "../../../models/groups";
+import Grupo from "../../../models/grupo";
 
 //Services
 import GroupsService from "../../../service/group/group_service";
-import Services from "../../../service/service/service";
 import PermissionService from "../../../service/permission/permission_service";
 
 //VALIDATIONS
@@ -116,11 +99,9 @@ export default {
   },
   data() {
     return {
-      groups: new Groups(),
+      groups: new Grupo(),
       submitted: false,
       groupsService: new GroupsService(),
-      service: new Services(),
-      services: [],
       permissoes: [],
       selectedAllPermissoes: false,
       permissionService: new PermissionService(),
@@ -128,12 +109,11 @@ export default {
   },
   created() {},
   mounted() {
-    this.findServices();
     this.findAllPermissions();
   },
   validations() {
     return {
-      groups: new Groups().validations(),
+      groups: new Grupo().validations(),
     };
   },
   computed: {
@@ -199,14 +179,6 @@ export default {
           this.$msgErro(error);
         });
     },
-    findServices() {
-      this.service
-        .findAll()
-        .then((response) => {
-          this.services = response;
-        })
-        .catch((error) => this.$msgErro(error));
-    },
     allPermissoes() {
       if (this.selectedAllPermissoes === false) {
         this.groups.permission = this.permissoes;
@@ -227,7 +199,7 @@ export default {
         });
     },
     hideDialog() {
-      this.groups = new Groups();
+      this.groups = new Grupo();
       this.submitted = false;
       this.$emit("findAll");
       this.visibleDialog = false;
