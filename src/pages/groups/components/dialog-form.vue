@@ -1,0 +1,241 @@
+<template>
+  <Dialog
+    v-model:visible="visibleDialog"
+    :style="{ width: '800px' }"
+    header="Fomulário de Grupos"
+    :modal="true"
+    @hide="hideDialog"
+    class="p-fluid"
+  >
+    <div class="field">
+      <label for="description">Descrição</label>
+      <InputText
+        id="description"
+        v-model="v$.groups.description.$model"
+        maxlength="100"
+        placeholder="Digite a descrição"
+        :class="{ 'p-invalid': submitted && v$.groups.description.$invalid }"
+      />
+      <small class="p-error" v-if="submitted && v$.groups.description.$invalid"
+        >Descrição é obrigatório.</small
+      >
+    </div>
+
+    <div class="field">
+      <label for="service">Serviço</label>
+      <Dropdown
+        id="service"
+        v-model="v$.groups.service.$model"
+        optionLabel="name"
+        :options="services"
+        placeholder="Selecione o serviço"
+        :class="{
+          'p-invalid': submitted && v$.groups.service.$invalid,
+        }"
+      />
+      <small class="p-error" v-if="submitted && v$.groups.service.$invalid"
+        >Serviço é obrigatório.</small
+      >
+    </div>
+    <label for="nome">Permissões do Grupo</label>
+    <div class="p-fluid p-formgrid p-grid">
+      <div class="p-col-12" style="padding: 5px">
+        <Listbox
+          v-model="v$.groups.permission.$model"
+          :options="permissoes"
+          :multiple="true"
+          :filter="true"
+          optionLabel="description"
+          listStyle="max-height:350px"
+          filterPlaceholder="DIGITE O NOME DA PERMISSÃO."
+          emptyFilterMessage="Nenhum Resultado..."
+          emptyMessage="Nenhum Resultado..."
+          :class="{
+            'p-invalid': submitted && v$.groups.permission.$invalid,
+          }"
+        >
+          <template #header>
+            <div style="padding: 15px">
+              <Checkbox
+                id="binary"
+                v-model="selectedAllPermissoes"
+                :binary="true"
+                @click="allPermissoes()"
+                class="p-mr-1"
+              />
+              <small>Todas as Permissões</small>
+            </div>
+          </template>
+          <template #option="slotProps">
+            <div class="product-list-detail">
+              <i class="pi pi-unlock product-category-icon p-mr-3"> </i>
+              <span class="product-category">
+                {{ slotProps.option.description.replace("ROLE_", "") }}.</span
+              >
+            </div>
+          </template>
+        </Listbox>
+        <small class="p-error" v-if="submitted && v$.groups.permission.$invalid"
+          >Permissão é obrigatório.</small
+        >
+      </div>
+    </div>
+
+    <template #footer>
+      <Button
+        label="Salvar"
+        class="p-button"
+        icon="pi pi-check"
+        @click="send(!v$.groups.$invalid)"
+      />
+      <Button
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button p-button-text"
+        @click="hideDialog"
+      />
+    </template>
+  </Dialog>
+</template>
+<script>
+//Models
+import Groups from "../../../models/groups";
+
+//Services
+import GroupsService from "../../../service/group/group_service";
+import Services from "../../../service/service/service";
+import PermissionService from "../../../service/permission/permission";
+
+//VALIDATIONS
+import { useVuelidate } from "@vuelidate/core";
+
+export default {
+  props: ["groupsSelected"],
+  setup() {
+    return { v$: useVuelidate() };
+  },
+  data() {
+    return {
+      groups: new Groups(),
+      submitted: false,
+      groupsService: new GroupsService(),
+      service: new Services(),
+      services: [],
+      permissoes: [],
+      selectedAllPermissoes: false,
+      permissionService: new PermissionService(),
+    };
+  },
+  created() {},
+  mounted() {
+    this.findServices();
+    this.findAllPermissions();
+  },
+  validations() {
+    return {
+      groups: new Groups().validations(),
+    };
+  },
+  computed: {
+    visibleDialog: {
+      get() {
+        let value = this.$store.state.views.groups.dialogForm;
+        if (value === true) this.getData();
+        return value;
+      },
+      set(value) {
+        this.$store.state.views.groups.dialogForm = value;
+      },
+    },
+  },
+  methods: {
+    send(isFormValid) {
+      this.submitted = true;
+      if (isFormValid) {
+        if (this.groups.id) {
+          this.update();
+        } else {
+          this.create();
+        }
+      } else {
+        return;
+      }
+    },
+    create() {
+      this.submitted = true;
+      this.groupsService
+        .create(this.groups)
+        .then((data) => {
+          if (data.status === 201) {
+            this.$toast.add({
+              severity: "success",
+              summary: "Alerta!",
+              detail: "Registro cadastrado com sucesso.",
+              life: 3000,
+            });
+            this.hideDialog();
+          }
+        })
+        .catch((error) => {
+          this.$msgErro(error);
+        });
+    },
+    update() {
+      this.submitted = true;
+      this.groupsService
+        .update(this.groups)
+        .then((data) => {
+          if (data.status === 200) {
+            this.$toast.add({
+              severity: "success",
+              summary: "Alerta!",
+              detail: "Registro alterado com sucesso.",
+              life: 3000,
+            });
+            this.hideDialog();
+          }
+        })
+        .catch((error) => {
+          this.$msgErro(error);
+        });
+    },
+    findServices() {
+      this.service
+        .findAll()
+        .then((response) => {
+          this.services = response;
+        })
+        .catch((error) => this.$msgErro(error));
+    },
+    allPermissoes() {
+      if (this.selectedAllPermissoes === false) {
+        this.groups.permission = this.permissoes;
+      } else {
+        this.groups.permission = null;
+      }
+    },
+    findAllPermissions() {
+      this.permissionService
+        .findAll()
+        .then((data) => {
+          this.permissoes = data;
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$msgWarn(null);
+          }
+        });
+    },
+    hideDialog() {
+      this.groups = new Groups();
+      this.submitted = false;
+      this.$emit("findAll");
+      this.visibleDialog = false;
+    },
+    getData() {
+      this.groups = this.groupsSelected;
+    },
+  },
+};
+</script>
+<style scoped></style>
