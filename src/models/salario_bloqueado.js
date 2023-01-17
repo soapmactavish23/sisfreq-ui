@@ -48,10 +48,7 @@ export default class SalarioBloqueado {
                 required,
             },
             funcionario: {
-                id: {
-                    required,
-                    maxLength: maxLength(10),
-                }
+                required,
             },
         };
     }
