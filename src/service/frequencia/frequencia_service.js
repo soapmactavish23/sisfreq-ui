@@ -16,4 +16,6 @@ export default class FrequenciaService extends Token {
   totalFrequenciasEnviadas() {
     return this.execute("GET", "/total-frequencias-enviadas");
   }
+
+  
 }
