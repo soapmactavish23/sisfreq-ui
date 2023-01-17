@@ -9,7 +9,7 @@ export default class UserService extends Token {
     queryParams = gerarUrl(queryParams);
     return axios({
       method: "get",
-      url: this.api_url + "user?" + queryParams,
+      url: this.api_url + "usuarios?" + queryParams,
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + this.token(),
@@ -20,7 +20,7 @@ export default class UserService extends Token {
   findById(id) {
     return axios({
       method: "get",
-      url: this.api_url + "user/" + id,
+      url: this.api_url + "usuarios/" + id,
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + this.token(),
@@ -31,20 +31,12 @@ export default class UserService extends Token {
   create(user) {
     return axios({
       method: "post",
-      url: this.api_url + "user",
+      url: this.api_url + "usuarios",
       withCredentials: true,
       data: user,
       headers: {
         Authorization: "Bearer " + this.token(),
       },
-    });
-  }
-
-  createUserAndPassword(user) {
-    return axios({
-      method: "post",
-      url: this.api_url + "user/create",
-      data: user,
     });
   }
 
@@ -63,7 +55,7 @@ export default class UserService extends Token {
   resetPassword(user) {
     return axios({
       method: "put",
-      url: this.api_url + "user/" + user.id + "/reset-password",
+      url: this.api_url + "usuarios/" + user.id + "/resetar-password",
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + this.token(),
@@ -73,7 +65,7 @@ export default class UserService extends Token {
   recoverPassword(email, param) {
     return axios({
       method: "put",
-      url: this.api_url + "user/" + email + "/recover-password",
+      url: this.api_url + "usuarios/" + email + "/recuperar-password",
       data: param,
     });
   }
@@ -81,7 +73,7 @@ export default class UserService extends Token {
   activateRegistration(user) {
     return axios({
       method: "put",
-      url: this.api_url + "user/" + user.email + "/activate-registration",
+      url: this.api_url + "usuarios/" + user.email + "/ativar-registration",
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + this.token(),
@@ -92,7 +84,7 @@ export default class UserService extends Token {
   updatePassword(id, newPassword) {
     return axios({
       method: "put",
-      url: this.api_url + "user/" + id + "/update-password",
+      url: this.api_url + "usuarios/" + id + "/alterar-password",
       withCredentials: true,
       data: newPassword,
       headers: {
@@ -104,7 +96,7 @@ export default class UserService extends Token {
   updateStatus(user) {
     return axios({
       method: "put",
-      url: this.api_url + "user/" + user.id + "/update-status",
+      url: this.api_url + "user/" + user.id + "/ativo",
       withCredentials: true,
       data: user.status,
       headers: {
@@ -117,7 +109,7 @@ export default class UserService extends Token {
   delete(id) {
     return axios({
       method: "delete",
-      url: this.api_url + "user/" + id,
+      url: this.api_url + "usuarios/" + id,
       withCredentials: true,
       headers: {
         Authorization: "Bearer " + this.token(),
