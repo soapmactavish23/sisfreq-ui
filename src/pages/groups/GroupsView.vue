@@ -43,14 +43,9 @@
           <template #empty>
             <div class="p-text-center">Nenhum resultado encontrado...</div>
           </template>
-          <Column header="Descrição" field="description" :sortable="true">
+          <Column header="Descrição" field="descricao" :sortable="true">
             <template #body="slotProps">
-              {{ slotProps.data.description }}
-            </template>
-          </Column>
-          <Column header="Serviço" field="service" :sortable="true">
-            <template #body="slotProps">
-              {{ slotProps.data.service.name }}
+              {{ slotProps.data.descricao }}
             </template>
           </Column>
           <Column header="Ações">

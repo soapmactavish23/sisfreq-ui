@@ -8,15 +8,15 @@
     class="p-fluid"
   >
     <div class="field">
-      <label for="description">Descrição</label>
+      <label for="descricao">Descrição</label>
       <InputText
-        id="description"
-        v-model="v$.groups.description.$model"
+        id="descricao"
+        v-model="v$.groups.descricao.$model"
         maxlength="100"
         placeholder="Digite a descrição"
-        :class="{ 'p-invalid': submitted && v$.groups.description.$invalid }"
+        :class="{ 'p-invalid': submitted && v$.groups.descricao.$invalid }"
       />
-      <small class="p-error" v-if="submitted && v$.groups.description.$invalid"
+      <small class="p-error" v-if="submitted && v$.groups.descricao.$invalid"
         >Descrição é obrigatório.</small
       >
     </div>
@@ -25,17 +25,17 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-col-12" style="padding: 5px">
         <Listbox
-          v-model="v$.groups.permission.$model"
+          v-model="v$.groups.permissoes.$model"
           :options="permissoes"
           :multiple="true"
           :filter="true"
-          optionLabel="description"
+          optionLabel="descricao"
           listStyle="max-height:350px"
           filterPlaceholder="DIGITE O NOME DA PERMISSÃO."
           emptyFilterMessage="Nenhum Resultado..."
           emptyMessage="Nenhum Resultado..."
           :class="{
-            'p-invalid': submitted && v$.groups.permission.$invalid,
+            'p-invalid': submitted && v$.groups.permissoes.$invalid,
           }"
         >
           <template #header>
@@ -54,12 +54,12 @@
             <div class="product-list-detail">
               <i class="pi pi-unlock product-category-icon p-mr-3"> </i>
               <span class="product-category">
-                {{ slotProps.option.description.replace("ROLE_", "") }}.</span
+                {{ slotProps.option.descricao.replace("ROLE_", "") }}.</span
               >
             </div>
           </template>
         </Listbox>
-        <small class="p-error" v-if="submitted && v$.groups.permission.$invalid"
+        <small class="p-error" v-if="submitted && v$.groups.permissoes.$invalid"
           >Permissão é obrigatório.</small
         >
       </div>

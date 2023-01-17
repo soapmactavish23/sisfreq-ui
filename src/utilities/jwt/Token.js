@@ -73,7 +73,7 @@ export default class Token extends Config {
       if (this.accessMethods.u) {
         const result = axios({
           method: "put",
-          url: this.api_url + this.pathUrl,
+          url: this.api_url + this.pathUrl + `/${data.id}`,
           data: data,
           withCredentials: true,
           headers: {
