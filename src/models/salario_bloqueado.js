@@ -24,10 +24,10 @@ export default class SalarioBloqueado {
             mes: {
                 required,
             },
-            dataModificacao: {
+            dataCadastro: {
                 required,
             },
-            dataCadastro: {
+            dataModificacao: {
                 required,
             },
             funcionario: {

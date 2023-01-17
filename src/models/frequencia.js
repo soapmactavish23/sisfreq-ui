@@ -18,4 +18,31 @@ export default class Frequecia {
         this.funcionario = new Funcionario();
         this.setorOrigem = new Setor();
     }
+    validations() {
+        return {
+            origem: {
+                required,
+            },
+            ano: {
+                required,
+            },
+            mes: {
+                required,
+            },
+            enviada: {
+                required,
+            },
+            dataCadastro: {
+                required,
+            },
+            dataModificacao: {
+                required,
+            },
+            funcionario: {
+                id: {
+                    required,
+                }
+            },
+        };
+    }
 }
