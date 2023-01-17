@@ -28,7 +28,7 @@
 
 <script>
 //Models
-import UserAuth from "../../models/user_auth";
+// import UserAuth from "../../models/user_auth";
 
 //Services
 import ServiceService from "../../service/service/service";
@@ -37,7 +37,7 @@ import Token from "../../utilities/jwt/Token";
 export default {
   data() {
     return {
-      userLogged: new UserAuth(),
+      userLogged: {},
       token: new Token(),
       serviceService: new ServiceService(),
       services: [],

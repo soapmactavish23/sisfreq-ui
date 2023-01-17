@@ -133,16 +133,12 @@
 </template>
 <script>
 //Models
-import Person from "../../../models/person";
-import Users from "../../../models/users";
+import Users from "../../../models/usuarios";
 
 //Services
-import PersonService from "../../../service/persons/person_service";
-import DetailsAddress from "../../persons/components/details-address.vue";
 import UsersService from "../../../service/user/user_service";
 
 // Components
-import detailsPerson from "../../persons/components/details-person.vue";
 
 //VALIDATIONS
 import { sameAs } from "@vuelidate/validators";

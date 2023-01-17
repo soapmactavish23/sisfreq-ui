@@ -1,4 +1,5 @@
 import jwtDecode from "jwt-decode";
+import axios from "axios";
 import Config from "../../service/auth/config.js";
 
 export default class Token extends Config {

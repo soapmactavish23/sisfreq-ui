@@ -294,7 +294,7 @@
 
 <script>
 //Models
-import User from "../../models/users";
+import User from "../../models/usuarios";
 import Person from "../../models/person";
 
 //Services
