@@ -8,7 +8,7 @@ export default class FuncionarioService extends Token {
 
   find(params) {
     let queryParams = gerarUrl(params);
-    return this.execute("GET", `/${queryParams}`).then((res) => res.data);
+    return this.execute("GET", `?${queryParams}`).then((res) => res.data);
   }
 
   totalFuncionarios() {

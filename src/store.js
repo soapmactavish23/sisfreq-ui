@@ -11,31 +11,17 @@ export default createStore({
           dialogCreate: false,
           dialogFoggetPassword: false,
         },
-        persons: {
-          dialogForm: false,
-          dialogUpload: false,
-        },
-        service: {
-          dialogForm: false,
-          dialogUpload: false,
-        },
-        banner: {
-          dialogForm: false,
-        },
         users: {
           dialogForm: false,
           dialogChangePassword: false,
         },
-        gender: {
-          dialogForm: false,
-        },
-        local: {
-          dialogForm: false,
-        },
         sector: {
           dialogForm: false,
         },
-        category: {
+        funcionario: {
+          dialogForm: false,
+        },
+        frequency: {
           dialogForm: false,
         },
         permission: {

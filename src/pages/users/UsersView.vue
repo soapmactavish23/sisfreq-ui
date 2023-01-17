@@ -28,7 +28,6 @@
         @filter="onFilter($event)"
         filterDisplay="row"
         responsiveLayout="scroll"
-        v-model:selection="selectedCustomers"
       >
         <Column
           field="nome"
@@ -156,7 +155,7 @@ export default {
       rows: this.$refs.dt.rows,
       sortField: null,
       sortOrder: null,
-      login: "",
+      nome: "",
     };
 
     this.loadLazyData();
@@ -243,7 +242,7 @@ export default {
       this.loadLazyData();
     },
     onFilter() {
-      this.lazyParams.login = this.filters.login.value;
+      this.lazyParams.nome = this.filters.nome.value;
       this.loadLazyData();
     },
   },

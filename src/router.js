@@ -17,11 +17,16 @@ const routes = [
         name: "sectors",
         component: () => import("./pages/sector/SectorView.vue"),
       },
-      // {
-      //   path: "/permissions",
-      //   name: "permissions",
-      //   component: () => import("./pages/permission/PermissionView.vue"),
-      // },
+      {
+        path: "/funcionarios",
+        name: "funcionarios",
+        component: () => import("./pages/funcionario/funcionario-view.vue"),
+      },
+      {
+        path: "/frequencias",
+        name: "frequencias",
+        component: () => import("./pages/frequencia/frequencia-view.vue"),
+      },
       {
         path: "/users",
         name: "users",
