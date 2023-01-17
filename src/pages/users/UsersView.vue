@@ -111,7 +111,7 @@
 
 <script>
 //Models
-import Users from "../../models/users";
+import Users from "../../models/usuarios";
 
 //Services
 import UsersService from "../../service/user/user_service";

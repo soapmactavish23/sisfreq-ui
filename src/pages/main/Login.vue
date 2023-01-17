@@ -83,8 +83,8 @@
 
     <div class="col-9 painelDiv">
       <div class="shadow-4 painel text-center">
-        <Carrousel />
-        <DialogCreate />
+        <!-- <Carrousel /> -->
+        <!-- <DialogCreate /> -->
         <DialogFoggetPassword />
       </div>
     </div>
@@ -93,22 +93,22 @@
 
 <script>
 //Models
-import Users from "../../models/users";
+import Users from "../../models/usuarios";
 
 //Services
 import AuthService from "../../service/auth/auth_service";
 
 //Components
 // import AppConfig from "../../components/menu/AppConfig.vue";
-import Carrousel from "./components/Carrousel.vue";
-import DialogCreate from "./components/DialogCreate.vue";
+// import Carrousel from "./components/Carrousel.vue";
+// import DialogCreate from "./components/DialogCreate.vue";
 import DialogFoggetPassword from "./components/DialogFoggetPassword.vue";
 
 export default {
   components: {
     // AppConfig,
-    Carrousel,
-    DialogCreate,
+    // Carrousel,
+    // DialogCreate,
     DialogFoggetPassword,
   },
   data() {
