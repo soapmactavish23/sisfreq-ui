@@ -84,7 +84,7 @@
 import { FilterMatchMode } from "primevue/api";
 
 //models
-import Groups from "../../models/groups";
+import Grupo from "../../models/grupo";
 
 //Services
 import GroupsService from "../../service/group/group_service";
@@ -100,7 +100,7 @@ export default {
     return {
       loading: false,
       groupss: [],
-      groups: new Groups(),
+      groups: new Grupo(),
       filters: {},
       filtersGroupss: {},
       groupsService: new GroupsService(),
@@ -114,7 +114,7 @@ export default {
   },
   methods: {
     showCreate() {
-      this.groups = new Groups();
+      this.groups = new Grupo();
       this.$store.state.views.groups.dialogForm = true;
     },
     showUpdate(groups) {
