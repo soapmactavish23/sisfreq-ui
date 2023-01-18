@@ -90,10 +90,20 @@
               id="atuacao"
               v-model="v$.obj.atuacao.id.$model"
               placeholder="Selecione um setor"
+              filterPlaceholder="Pesquisar por sigla"
               :options="setores"
               optionValue="id"
               optionLabel="sigla"
-              style="z-index: 1000 !important"
+              :virtualScrollerOptions="{
+                lazy: true,
+                onLazyLoad: onLazyLoad,
+                itemSize: 10,
+                showLoader: true,
+                loading: loading,
+                delay: 250,
+              }"
+              @filter="getSectors($event)"
+              :filter="true"
               :class="{ 'p-invalid': submitted && v$.obj.atuacao.id.$invalid }"
             />
             <small
@@ -109,9 +119,20 @@
               id="lotacao"
               v-model="v$.obj.lotacao.id.$model"
               placeholder="Selecione um setor"
+              filterPlaceholder="Pesquisar por sigla"
               :options="setores"
               optionValue="id"
               optionLabel="sigla"
+              :virtualScrollerOptions="{
+                lazy: true,
+                onLazyLoad: onLazyLoad,
+                itemSize: 10,
+                showLoader: true,
+                loading: loading,
+                delay: 250,
+              }"
+              @filter="getSectors($event)"
+              :filter="true"
               :class="{ 'p-invalid': submitted && v$.obj.lotacao.id.$invalid }"
             />
             <small
@@ -175,9 +196,13 @@
               id="agencia"
               v-model="v$.obj.dataDesligamento.$model"
               type="date"
-              :class="{ 'p-invalid': submitted && v$.obj.dataDesligamento.$invalid }"
+              :class="{
+                'p-invalid': submitted && v$.obj.dataDesligamento.$invalid,
+              }"
             />
-            <small class="p-error" v-if="submitted && v$.obj.dataDesligamento.$invalid"
+            <small
+              class="p-error"
+              v-if="submitted && v$.obj.dataDesligamento.$invalid"
               >Agência é obrigatório.</small
             >
           </div>
@@ -188,22 +213,32 @@
               v-model="v$.obj.tipoAfastamento.$model"
               maxlength="20"
               placeholder="Digite o tipo afastamento"
-              :class="{ 'p-invalid': submitted && v$.obj.tipoAfastamento.$invalid }"
+              :class="{
+                'p-invalid': submitted && v$.obj.tipoAfastamento.$invalid,
+              }"
             />
-            <small class="p-error" v-if="submitted && v$.obj.tipoAfastamento.$invalid"
+            <small
+              class="p-error"
+              v-if="submitted && v$.obj.tipoAfastamento.$invalid"
               >Tipo de Afastamento é obrigatório.</small
             >
           </div>
           <div class="field col-12 md:col-6">
-            <label for="dataInicioAfastamento">Data de Inicio do Afastamento</label>
+            <label for="dataInicioAfastamento"
+              >Data de Inicio do Afastamento</label
+            >
             <InputText
               id="dataInicioAfastamento"
               v-model="v$.obj.dataInicioAfastamento.$model"
               type="date"
               placeholder="Digite o dataInicioAfastamento "
-              :class="{ 'p-invalid': submitted && v$.obj.dataInicioAfastamento.$invalid }"
+              :class="{
+                'p-invalid': submitted && v$.obj.dataInicioAfastamento.$invalid,
+              }"
             />
-            <small class="p-error" v-if="submitted && v$.obj.dataInicioAfastamento.$invalid"
+            <small
+              class="p-error"
+              v-if="submitted && v$.obj.dataInicioAfastamento.$invalid"
               >Data de Inicio do Afastamento é obrigatório.</small
             >
           </div>
@@ -214,9 +249,13 @@
               v-model="v$.obj.dataFimAfastamento.$model"
               type="date"
               placeholder="Digite o dataFimAfastamento "
-              :class="{ 'p-invalid': submitted && v$.obj.dataFimAfastamento.$invalid }"
+              :class="{
+                'p-invalid': submitted && v$.obj.dataFimAfastamento.$invalid,
+              }"
             />
-            <small class="p-error" v-if="submitted && v$.obj.dataFimAfastamento.$invalid"
+            <small
+              class="p-error"
+              v-if="submitted && v$.obj.dataFimAfastamento.$invalid"
               >Data de Fim do Afastamento é obrigatório.</small
             >
           </div>
@@ -264,9 +303,6 @@ export default {
       setores: [],
       sectorService: new SectorService(),
     };
-  },
-  mounted() {
-    this.getSectors();
   },
   validations() {
     return {
@@ -344,13 +380,22 @@ export default {
     },
     getData() {
       this.obj = this.objSelected;
-      this.obj.dataDesligamento = this.$DateTime.formatarDateInput(this.obj.dataDesligamento);
-      this.obj.dataInicioAfastamento = this.$DateTime.formatarDateInput(this.obj.dataInicioAfastamento);
-      this.obj.dataFimAfastamento = this.$DateTime.formatarDateInput(this.obj.dataFimAfastamento);
+      this.obj.dataDesligamento = this.$DateTime.formatarDateInput(
+        this.obj.dataDesligamento
+      );
+      this.obj.dataInicioAfastamento = this.$DateTime.formatarDateInput(
+        this.obj.dataInicioAfastamento
+      );
+      this.obj.dataFimAfastamento = this.$DateTime.formatarDateInput(
+        this.obj.dataFimAfastamento
+      );
     },
-    getSectors() {
-      this.sectorService.findAll().then((data) => {
-        this.setores = data;
+    getSectors(event) {
+      let params = {};
+      if(event.value != null) params = {sigla: event.value};
+
+      this.sectorService.find(params).then((data) => {
+        this.setores = data.content;
       });
     },
   },
