@@ -166,7 +166,7 @@ export default {
   data() {
     return {
       loading: false,
-      sectors: [],
+      sectors: null,
       sector: new Setor(),
       permissoes: [],
       filters: {
