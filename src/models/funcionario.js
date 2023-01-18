@@ -49,18 +49,16 @@ export default class Funcionario {
         maxLength: maxLength(100),
       },
       horarioTrabalho: {
+        required,
         maxLength: maxLength(25),
       },
       situacao: {
         required,
-        maxLength: maxLength(20),
       },
       dataDesligamento: {},
       dataInicioAfastamento: {},
       dataFimAfastamento: {},
-      tipoAfastamento: {
-        maxLength: maxLength(10),
-      },
+      tipoAfastamento: {},
       dataCadastro: {},
       dataModificacao: {},
       banco: {

@@ -189,7 +189,7 @@ export default {
             .delete(obj.id) 
             .then((data) => {
               this.$msgSuccess(data);
-              this.findAll();
+              this.loadLazyData();
             })
             .catch((error) => {
               this.$msgErro(error);

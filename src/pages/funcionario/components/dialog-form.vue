@@ -27,7 +27,7 @@
             <InputText
               id="matricula"
               v-model="v$.obj.matricula.$model"
-              maxlength="100"
+              maxlength="15"
               placeholder="Digite o matricula "
               :class="{ 'p-invalid': submitted && v$.obj.matricula.$invalid }"
             />
@@ -53,7 +53,7 @@
       <br />
       <Fieldset legend="Dados do Vinculo">
         <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-6">
+          <div class="field col-12 md:col-4">
             <label for="vinculo">Vinculo</label>
             <InputText
               id="vinculo"
@@ -67,7 +67,22 @@
               >Vinculo é obrigatório.</small
             >
           </div>
-          <div class="field col-12 md:col-6">
+          <div class="field col-12 md:col-4">
+            <label for="situacao">Situação</label>
+            <Dropdown
+              id="situacao"
+              v-model="v$.obj.situacao.$model"
+              :options="SituacaoFuncionario"
+              optionLabel="name"
+              optionValue="key"
+              placeholder="Selecione uma situação"
+              :class="{ 'p-invalid': submitted && v$.obj.situacao.$invalid }"
+            />
+            <small class="p-error" v-if="submitted && v$.obj.situacao.$invalid"
+              >Situação é obrigatório.</small
+            >
+          </div>
+          <div class="field col-12 md:col-4">
             <label for="horarioTrabalho">Horário de Trabalho</label>
             <InputText
               id="horarioTrabalho"
@@ -208,11 +223,15 @@
           </div>
           <div class="field col-12 md:col-6">
             <label for="tipoAfastamento">Tipo de Afastamento</label>
-            <InputText
+            <Dropdown
               id="tipoAfastamento"
               v-model="v$.obj.tipoAfastamento.$model"
-              maxlength="20"
-              placeholder="Digite o tipo afastamento"
+              :options="TipoAfastamento"
+              optionLabel="name"
+              optionValue="key"
+              placeholder="Selecione o tipo de afastamento"
+              :showClear="true"
+              :filter="true"
               :class="{
                 'p-invalid': submitted && v$.obj.tipoAfastamento.$invalid,
               }"
@@ -283,6 +302,10 @@
 //Models
 import Funcionario from "../../../models/funcionario";
 
+//Enums
+import { SituacaoFuncionario } from "../../../models/enums/situacao";
+import { TipoAfastamento } from "../../../models/enums/tipo_afastamento";
+
 //Services
 import FuncionarioService from "../../../service/funcionario/funcionario_service";
 import SectorService from "../../../service/sector/sector_service";
@@ -298,11 +321,13 @@ export default {
   data() {
     return {
       obj: new Funcionario(),
-      submitted: true,
+      submitted: false,
       service: new FuncionarioService(),
       setoresLotacao: [],
       setoresAtuacao: [],
       sectorService: new SectorService(),
+      SituacaoFuncionario,
+      TipoAfastamento
     };
   },
   validations() {
@@ -382,8 +407,8 @@ export default {
     getData() {
       this.obj = this.objSelected;
       if (this.obj.id != null) {
-        this.getSectorsLotacao({value: this.obj.lotacao.sigla});
-        this.getSetoresAtuacao({value: this.obj.atuacao.sigla});
+        this.getSectorsLotacao({ value: this.obj.lotacao.sigla });
+        this.getSetoresAtuacao({ value: this.obj.atuacao.sigla });
       }
       this.obj.dataDesligamento = this.$DateTime.formatarDateInput(
         this.obj.dataDesligamento
@@ -394,7 +419,7 @@ export default {
       this.obj.dataFimAfastamento = this.$DateTime.formatarDateInput(
         this.obj.dataFimAfastamento
       );
-    },    
+    },
     getSectorsLotacao(event) {
       let params = {};
       if (event.value != null) params = { sigla: event.value };
