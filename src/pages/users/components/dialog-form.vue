@@ -76,13 +76,12 @@
         >
       </div>
       <div class="field col-12">
-        <!-- TODO: LIST GROUPS -->
         <label for="grupo">Grupos</label>
         <Dropdown
           id="grupo"
           v-model="v$.user.grupo.$model"
           :options="groups"
-          optionLabel="description"
+          optionLabel="descricao"
           placeholder="Selecione um grupo"
           :class="{
             'p-invalid': submitted && v$.user.grupo.$invalid,
@@ -133,7 +132,7 @@ export default {
       confirmPassword: null,
       userService: new UsersService(),
       groupService: new GroupService(),
-      groups: [],
+      groups: null,
     };
   },
   mounted() {

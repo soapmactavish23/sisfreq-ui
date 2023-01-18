@@ -64,7 +64,6 @@
         >
       </div>
     </div>
-
     <template #footer>
       <Button
         label="Salvar"

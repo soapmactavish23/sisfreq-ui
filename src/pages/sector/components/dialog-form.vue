@@ -28,15 +28,25 @@
         maxlength="20"
         placeholder="Digite a sigla do setor"
       />
+      <small
+        v-if="submitted && v$.sector.sigla.maxLength.$invalid"
+        class="p-error"
+        >Sigla inválida. Máximo 20 caracteres</small
+      >
     </div>
     <div class="field">
-      <label for="tipoSetor">Tipo do Setor</label>
-      <InputText
+      <label for="tipoSetor">Tipo de Setor</label>
+      <Dropdown
         id="tipoSetor"
-        v-model="sector.tipoSetor"
-        maxlength="20"
-        placeholder="Digite a tipo do setor"
+        v-model="v$.sector.tipoSetor.$model"
+        :options="tipoSetores"
+        optionLabel="name"
+        placeholder="Selecione tipo do setor"
+        :class="{ 'p-invalid': submitted && v$.sector.tipoSetor.$invalid }"
       />
+      <small class="p-error" v-if="submitted && v$.sector.tipoSetor.$invalid"
+        >Nome do setor é obrigatório.</small
+      >
     </div>
     <template #footer>
       <Button
@@ -57,6 +67,8 @@
 <script>
 //Models
 import Setor from "../../../models/setor";
+//ENUM
+import { TipoSetor } from "../../../models/enums/tipo_setor.js";
 
 //Services
 import SectorService from "../../../service/sector/sector_service";
@@ -74,6 +86,7 @@ export default {
       sector: new Setor(),
       submitted: false,
       sectorService: new SectorService(),
+      tipoSetores: TipoSetor,
     };
   },
   validations() {
@@ -99,8 +112,10 @@ export default {
       this.submitted = true;
       if (isFormValid) {
         if (this.sector.id) {
+          console.log("aqui");
           this.update();
         } else {
+          console.log("aqui2");
           this.create();
         }
       } else {

@@ -6,7 +6,7 @@ export default class Setor {
         this.tipoSetor = null;
         this.sigla = null;
         this.nome = null;
-        this.ativo = null;
+        this.ativo = true;
         this.dataCadastro = null;
         this.dataModificacao = null;
 
@@ -21,17 +21,6 @@ export default class Setor {
                 maxLength: maxLength(100),
             },
             tipoSetor: {
-                required,
-                maxLength: maxLength(20),
-            },
-            ativo: {
-                required,
-                maxLength: maxLength(3),
-            },
-            dataCadastro: {
-                required,
-            },
-            dataModificacao: {
                 required,
             },
         };
