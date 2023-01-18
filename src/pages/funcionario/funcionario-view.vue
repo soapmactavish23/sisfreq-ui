@@ -150,6 +150,7 @@ export default {
         cpf: { value: "", matchMode: "contains" },
       },
       service: new FuncionarioService(),
+      lazyParams: {}
     };
   },
   mounted() {

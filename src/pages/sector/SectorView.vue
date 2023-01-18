@@ -11,46 +11,89 @@
               @click="showCreate()"
             />
           </template>
-          <template #end>
-            <div
-              class="table-header p-d-flex p-flex-column p-flex-md-row p-jc-md-between"
-            >
-              <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText
-                  v-model="filters['global'].value"
-                  placeholder="Buscar..."
-                />
-              </span>
-            </div>
-          </template>
         </Toolbar>
         <DataTable
           ref="dt"
           dataKey="id"
           class="p-datatable-sm"
           :value="sectors"
+          :lazy="true"
           :paginator="true"
           :rows="10"
           :rowsPerPageOptions="[10, 20, 50]"
           :filters="filters"
-          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+          paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
           :loading="loading"
+          :totalRecords="totalRecords"
+          @page="onPage($event)"
+          @sort="onSort($event)"
+          @filter="onFilter($event)"
+          filterDisplay="row"
+          responsiveLayout="scroll"
+          currentPageReportTemplate="Registro {first} de {last} de {totalRecords}"
+          :globalFilterFields="['nome', 'sigla', 'tipoSetor']"
         >
           <template #empty>
             <div class="p-text-center">Nenhum resultado encontrado...</div>
           </template>
-          <Column header="Nome" field="nome" :sortable="true">
+          <Column
+            field="nome"
+            header="Nome"
+            filterMatchMode="startsWith"
+            filterField="nome"
+            ref="nome"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                type="text"
+                v-model="filterModel.value"
+                @keydown.enter="filterCallback()"
+                class="p-column-filter"
+                placeholder="Pesquisar por nome"
+              />
+            </template>
             <template #body="slotProps">
               {{ slotProps.data.nome }}
             </template>
           </Column>
-          <Column header="Sigla" field="sigla" :sortable="true">
+          <Column
+            field="sigla"
+            header="Sigla"
+            filterMatchMode="startsWith"
+            filterField="sigla"
+            ref="sigla"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                type="text"
+                v-model="filterModel.value"
+                @keydown.enter="filterCallback()"
+                class="p-column-filter"
+                placeholder="Pesquisar por sigla"
+              />
+            </template>
             <template #body="slotProps">
               {{ slotProps.data.sigla }}
             </template>
           </Column>
-          <Column header="Tipo Setor" field="tipoSetor" :sortable="true">
+          <Column
+            field="tipoSetor"
+            header="Tipo Setor"
+            filterMatchMode="startsWith"
+            filterField="tipoSetor"
+            ref="tipoSetor"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <Dropdown
+                v-model="filterModel.value"
+                @change="filterCallback()"
+                class="p-column-filter"
+                :options="TipoSetor"
+                optionValue="key"
+                optionLabel="name"
+                placeholder="Tipo de Setor"
+              />
+            </template>
             <template #body="slotProps">
               {{ slotProps.data.tipoSetor }}
             </template>
@@ -104,10 +147,11 @@
 </template>
 
 <script>
-import { FilterMatchMode } from "primevue/api";
-
 //models
 import Setor from "../../models/setor";
+
+//Enums
+import {TipoSetor} from "../../models/enums/tipo_setor";
 
 //Services
 import SectorService from "../../service/sector/sector_service";
@@ -125,16 +169,31 @@ export default {
       sectors: [],
       sector: new Setor(),
       permissoes: [],
-      filters: {},
-      filtersPermissions: {},
-      sectorService: new SectorService(),
+      filters: {
+        nome: { value: "", matchMode: "contains" },
+        sigla: { value: "", matchMode: "contains" },
+        tipoSetor: { value: "", matchMode: "contains" },
+      },
+      service: new SectorService(),
+      lazyParams: {},
+      totalRecords: null,
+      TipoSetor,
     };
   },
-  created() {
-    this.initFilters();
-  },
   mounted() {
-    this.findAll();
+    this.loading = true;
+
+    this.lazyParams = {
+      first: 0,
+      rows: this.$refs.dt.rows,
+      sortField: null,
+      sortOrder: null,
+      nome: "",
+      sigla: "",
+      tipoSetor: "",
+    };
+
+    this.loadLazyData();
   },
   methods: {
     showCreate() {
@@ -144,7 +203,7 @@ export default {
     changeStatus(sector) {
       this.sector = sector;
       this.sector.ativo = !this.sector.ativo;
-      this.sectorService
+      this.service
         .update(this.sector)
         .then((data) => {
           this.$msgSuccess(data);
@@ -167,7 +226,7 @@ export default {
         acceptLabel: "Sim",
         rejectLabel: "Não",
         accept: () => {
-          this.sectorService
+          this.service
             .delete(sector.id)
             .then((data) => {
               this.$msgSuccess(data);
@@ -179,20 +238,27 @@ export default {
         },
       });
     },
-    findAll() {
+    loadLazyData() {
       this.loading = true;
-      this.sectorService.findAll().then((data) => {
-        this.sectors = data;
+      this.service.find(this.lazyParams).then((data) => {
+        this.sectors = data.content;
+        this.totalRecords = data.totalElements;
         this.loading = false;
       });
     },
-    initFilters() {
-      this.filters = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
-      this.filtersPermissions = {
-        global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      };
+    onPage(event) {
+      this.lazyParams = event;
+      this.loadLazyData();
+    },
+    onSort(event) {
+      this.lazyParams = event;
+      this.loadLazyData();
+    },
+    onFilter(event) {
+      this.lazyParams.nome = event.filters.nome.value;
+      this.lazyParams.sigla = event.filters.sigla.value;
+      this.lazyParams.tipoSetor = event.filters.tipoSetor.value;
+      this.loadLazyData();
     },
   },
 };

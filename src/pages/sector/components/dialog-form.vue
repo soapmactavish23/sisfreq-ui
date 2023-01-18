@@ -41,6 +41,7 @@
         v-model="v$.sector.tipoSetor.$model"
         :options="tipoSetores"
         optionLabel="name"
+        optionValue="key"
         placeholder="Selecione tipo do setor"
         :class="{ 'p-invalid': submitted && v$.sector.tipoSetor.$invalid }"
       />
@@ -107,8 +108,7 @@ export default {
     },
   },
   methods: {
-    send(isFormValid) {
-      //TODO: SEND SECTOR
+    send(isFormValid) {      
       this.submitted = true;
       if (isFormValid) {
         if (this.sector.id) {
