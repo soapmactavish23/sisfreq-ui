@@ -8,3 +8,8 @@ export let TipoSetor = [
         name: "Oficioso",
     },
 ];
+
+export function convertTipoSetor(tipoSetor) {
+    const value = TipoSetor.find((type) => type.key == tipoSetor);
+    return value.name;
+}

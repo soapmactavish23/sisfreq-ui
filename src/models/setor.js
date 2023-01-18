@@ -6,7 +6,7 @@ export default class Setor {
         this.tipoSetor = null;
         this.sigla = null;
         this.nome = null;
-        this.ativo = 1;
+        this.ativo = true;
         this.dataCadastro = null;
         this.dataModificacao = null;
 
