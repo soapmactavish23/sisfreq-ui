@@ -61,12 +61,8 @@ export default class Funcionario {
       tipoAfastamento: {
         maxLength: maxLength(10),
       },
-      dataCadastro: {
-        required,
-      },
-      dataModificacao: {
-        required,
-      },
+      dataCadastro: {},
+      dataModificacao: {},
       banco: {
         maxLength: maxLength(20),
       },
@@ -75,9 +71,6 @@ export default class Funcionario {
       },
       conta: {
         maxLength: maxLength(10),
-      },
-      funcionario: {
-        required,
       },
     };
   }

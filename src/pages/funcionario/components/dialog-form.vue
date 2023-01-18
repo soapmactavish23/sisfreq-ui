@@ -91,7 +91,7 @@
               v-model="v$.obj.atuacao.id.$model"
               placeholder="Selecione um setor"
               filterPlaceholder="Pesquisar por sigla"
-              :options="setores"
+              :options="setoresAtuacao"
               optionValue="id"
               optionLabel="sigla"
               :virtualScrollerOptions="{
@@ -102,7 +102,7 @@
                 loading: loading,
                 delay: 250,
               }"
-              @filter="getSectors($event)"
+              @filter="getSetoresAtuacao($event)"
               :filter="true"
               :class="{ 'p-invalid': submitted && v$.obj.atuacao.id.$invalid }"
             />
@@ -120,7 +120,7 @@
               v-model="v$.obj.lotacao.id.$model"
               placeholder="Selecione um setor"
               filterPlaceholder="Pesquisar por sigla"
-              :options="setores"
+              :options="setoresLotacao"
               optionValue="id"
               optionLabel="sigla"
               :virtualScrollerOptions="{
@@ -131,7 +131,7 @@
                 loading: loading,
                 delay: 250,
               }"
-              @filter="getSectors($event)"
+              @filter="getSectorsLotacao($event)"
               :filter="true"
               :class="{ 'p-invalid': submitted && v$.obj.lotacao.id.$invalid }"
             />
@@ -298,9 +298,10 @@ export default {
   data() {
     return {
       obj: new Funcionario(),
-      submitted: false,
+      submitted: true,
       service: new FuncionarioService(),
-      setores: [],
+      setoresLotacao: [],
+      setoresAtuacao: [],
       sectorService: new SectorService(),
     };
   },
@@ -380,6 +381,10 @@ export default {
     },
     getData() {
       this.obj = this.objSelected;
+      if (this.obj.id != null) {
+        this.getSectorsLotacao({value: this.obj.lotacao.sigla});
+        this.getSetoresAtuacao({value: this.obj.atuacao.sigla});
+      }
       this.obj.dataDesligamento = this.$DateTime.formatarDateInput(
         this.obj.dataDesligamento
       );
@@ -389,13 +394,21 @@ export default {
       this.obj.dataFimAfastamento = this.$DateTime.formatarDateInput(
         this.obj.dataFimAfastamento
       );
-    },
-    getSectors(event) {
+    },    
+    getSectorsLotacao(event) {
       let params = {};
-      if(event.value != null) params = {sigla: event.value};
+      if (event.value != null) params = { sigla: event.value };
 
       this.sectorService.find(params).then((data) => {
-        this.setores = data.content;
+        this.setoresLotacao = data.content;
+      });
+    },
+    getSetoresAtuacao(event) {
+      let params = {};
+      if (event.value != null) params = { sigla: event.value };
+
+      this.sectorService.find(params).then((data) => {
+        this.setoresAtuacao = data.content;
       });
     },
   },
