@@ -31,7 +31,7 @@
           filterDisplay="row"
           responsiveLayout="scroll"
           currentPageReportTemplate="Registro {first} de {last} de {totalRecords}"
-          :globalFilterFields="['nome', 'sigla', 'tipoSetor']"
+          :globalFilterFields="['nome', 'sigla', 'tipoSetor', 'ativo']"
         >
           <template #empty>
             <div class="p-text-center">Nenhum resultado encontrado...</div>
@@ -98,7 +98,25 @@
               {{ slotProps.data.tipoSetor }}
             </template>
           </Column>
-          <Column field="ativo" header="Ativo" ref="ativo">
+          <!-- //TODO: Filtro para ativo -->
+          <Column
+            field="ativo"
+            header="Ativo"
+            ref="ativo"
+            filterMatchMode="startsWith"
+            filterField="ativo"
+          >
+            <template #filter="{ filterModel, filterCallback }">
+              <Dropdown
+                v-model="filterModel.value"
+                @change="filterCallback()"
+                class="p-column-filter"
+                :options="Ativo"
+                optionValue="key"
+                optionLabel="name"
+                placeholder="Ativo"
+              />
+            </template>
             <template #body="slotProps">
               <span class="p-column-title">Ativo:</span>
               <span
@@ -151,7 +169,8 @@
 import Setor from "../../models/setor";
 
 //Enums
-import {TipoSetor} from "../../models/enums/tipo_setor";
+import { TipoSetor } from "../../models/enums/tipo_setor";
+import { Ativo } from "../../models/enums/ativo";
 
 //Services
 import SectorService from "../../service/sector/sector_service";
@@ -173,11 +192,13 @@ export default {
         nome: { value: "", matchMode: "contains" },
         sigla: { value: "", matchMode: "contains" },
         tipoSetor: { value: "", matchMode: "contains" },
+        ativo: { value: "", matchMode: "contains" },
       },
       service: new SectorService(),
       lazyParams: {},
       totalRecords: null,
       TipoSetor,
+      Ativo,
     };
   },
   mounted() {
@@ -191,6 +212,7 @@ export default {
       nome: "",
       sigla: "",
       tipoSetor: "",
+      ativo: "",
     };
 
     this.loadLazyData();
@@ -230,7 +252,7 @@ export default {
             .delete(sector.id)
             .then((data) => {
               this.$msgSuccess(data);
-              this.findAll();
+              this.loadLazyData();
             })
             .catch((error) => {
               this.$msgErro(error);
@@ -258,6 +280,7 @@ export default {
       this.lazyParams.nome = event.filters.nome.value;
       this.lazyParams.sigla = event.filters.sigla.value;
       this.lazyParams.tipoSetor = event.filters.tipoSetor.value;
+      this.lazyParams.ativo = event.filters.ativo.value;
       this.loadLazyData();
     },
   },
