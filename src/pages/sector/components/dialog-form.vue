@@ -41,6 +41,7 @@
         v-model="v$.sector.tipoSetor.$model"
         :options="tipoSetores"
         optionLabel="name"
+        optionValue="key"
         placeholder="Selecione tipo do setor"
         :class="{ 'p-invalid': submitted && v$.sector.tipoSetor.$invalid }"
       />

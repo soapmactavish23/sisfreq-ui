@@ -13,7 +13,10 @@
           </template>
           <template #end>
             <div
-              class="table-header p-d-flex p-flex-column p-flex-md-row p-jc-md-between"
+              class="
+                table-header
+                p-d-flex p-flex-column p-flex-md-row p-jc-md-between
+              "
             >
               <span class="p-input-icon-left">
                 <i class="pi pi-search" />
@@ -122,7 +125,7 @@ export default {
   data() {
     return {
       loading: false,
-      sectors: [],
+      sectors: null,
       sector: new Setor(),
       permissoes: [],
       filters: {},
