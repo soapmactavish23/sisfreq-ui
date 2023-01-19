@@ -98,7 +98,6 @@
               {{ slotProps.data.tipoSetor }}
             </template>
           </Column>
-          <!-- //TODO: Filtro para ativo -->
           <Column
             field="ativo"
             header="Ativo"
@@ -187,7 +186,6 @@ export default {
       loading: false,
       sectors: null,
       sector: new Setor(),
-      permissoes: [],
       filters: {
         nome: { value: "", matchMode: "contains" },
         sigla: { value: "", matchMode: "contains" },
