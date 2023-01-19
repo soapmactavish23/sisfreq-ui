@@ -1,60 +1,60 @@
 <template>
   <Dialog
     v-model:visible="visibleDialog"
-    :style="{ width: '480px' }"
-    header="Fomulário de Setores"
+    :style="{ width: '960px' }"
+    header="Fomulário de Frequência"
     :modal="true"
     @hide="hideDialog"
     class="p-fluid"
   >
     <div class="field">
-      <label for="nome">Nome</label>
-      <InputText
-        id="nome"
-        v-model="v$.sector.nome.$model"
-        maxlength="100"
-        placeholder="Digite o nome do setor"
-        :class="{ 'p-invalid': submitted && v$.sector.nome.$invalid }"
-      />
-      <small class="p-error" v-if="submitted && v$.sector.nome.$invalid"
-        >Nome do setor é obrigatório.</small
-      >
-    </div>
-    <div class="field">
-      <label for="sigla">Sigla</label>
-      <InputText
-        id="sigla"
-        v-model="sector.sigla"
-        maxlength="20"
-        placeholder="Digite a sigla do setor"
-      />
-      <small
-        v-if="submitted && v$.sector.sigla.maxLength.$invalid"
-        class="p-error"
-        >Sigla inválida. Máximo 20 caracteres</small
-      >
-    </div>
-    <div class="field">
-      <label for="tipoSetor">Tipo de Setor</label>
+      <label for="atuacao">Atuação</label>
       <Dropdown
-        id="tipoSetor"
-        v-model="v$.sector.tipoSetor.$model"
-        :options="tipoSetores"
-        optionLabel="name"
-        optionValue="key"
-        placeholder="Selecione tipo do setor"
-        :class="{ 'p-invalid': submitted && v$.sector.tipoSetor.$invalid }"
+        id="atuacao"
+        v-model="v$.obj.setorOrigem.$model"
+        :options="atuacoes"
+        optionLabel="nome"
+        placeholder="Selecione a atuação"
+        :class="{ 'p-invalid': submitted && v$.obj.setorOrigem.$invalid }"
       />
-      <small class="p-error" v-if="submitted && v$.sector.tipoSetor.$invalid"
-        >Nome do setor é obrigatório.</small
+      <small class="p-error" v-if="submitted && v$.obj.setorOrigem.$invalid"
+        >Atuação é obrigatória.</small
       >
+    </div>
+    <div class="p-fluid formgrid grid p-2">
+      <div class="field col-4 md:col-6">
+        <label for="ano">Ano</label>
+        <InputText
+          id="ano"
+          v-model="v$.obj.ano.$model"
+          maxlength="100"
+          placeholder="Digite o ano"
+          :class="{ 'p-invalid': submitted && v$.obj.ano.$invalid }"
+        />
+        <small class="p-error" v-if="submitted && v$.obj.ano.$invalid"
+          >Ano é obrigatório.</small
+        >
+      </div>
+      <div class="field col-4 md:col-6">
+        <label for="mes">Mês</label>
+        <InputText
+          id="mes"
+          v-model="v$.obj.mes.$model"
+          maxlength="100"
+          placeholder="Digite o mês"
+          :class="{ 'p-invalid': submitted && v$.obj.mes.$invalid }"
+        />
+        <small class="p-error" v-if="submitted && v$.obj.mes.$invalid"
+          >Mês é obrigatório.</small
+        >
+      </div>
     </div>
     <template #footer>
       <Button
         label="Salvar"
         class="p-button"
         icon="pi pi-check"
-        @click="send(!v$.sector.$invalid)"
+        @click="send(!v$.obj.$invalid)"
       />
       <Button
         label="Cancelar"
@@ -67,51 +67,52 @@
 </template>
 <script>
 //Models
-import Setor from "../../../models/setor";
-//ENUM
-import { TipoSetor } from "../../../models/enums/tipo_setor.js";
+import Frequencia from "../../../models/frequencia";
 
 //Services
+import FrequenciaService from "../../../service/frequencia/frequencia_service";
 import SectorService from "../../../service/sector/sector_service";
 
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";
+import Frequecia from "../../../models/frequencia";
 
 export default {
-  props: ["sectorSelected"],
+  props: ["objSelected"],
   setup() {
     return { v$: useVuelidate() };
   },
   data() {
     return {
-      sector: new Setor(),
+      obj: new Frequecia(),
       submitted: false,
+      frequeciaService: new FrequenciaService(),
       sectorService: new SectorService(),
-      tipoSetores: TipoSetor,
+      atuacoes: null,
     };
   },
   validations() {
     return {
-      sector: new Setor().validations(),
+      obj: new Frequecia().validations(),
     };
   },
   computed: {
     visibleDialog: {
       get() {
-        let value = this.$store.state.views.sector.dialogForm;
+        let value = this.$store.state.views.frequency.dialogForm;
         if (value === true) this.getData();
         return value;
       },
       set(value) {
-        this.$store.state.views.sector.dialogForm = value;
+        this.$store.state.views.frequency.dialogForm = value;
       },
     },
   },
   methods: {
-    send(isFormValid) {      
+    send(isFormValid) {
       this.submitted = true;
       if (isFormValid) {
-        if (this.sector.id) {
+        if (this.obj.id) {
           console.log("aqui");
           this.update();
         } else {
@@ -122,10 +123,11 @@ export default {
         return;
       }
     },
+    //TODO: FAZER CREATE FUNCIONAR, VERIFICAR NO ENDPOINT CRIARFREQUENCIAS
     create() {
       this.submitted = true;
-      this.sectorService
-        .create(this.sector)
+      this.frequeciaService
+        .create(this.obj)
         .then((data) => {
           if (data.status === 201) {
             this.$toast.add({
@@ -143,8 +145,8 @@ export default {
     },
     update() {
       this.submitted = true;
-      this.sectorService
-        .update(this.sector)
+      this.frequeciaService
+        .update(this.obj)
         .then((data) => {
           if (data.status === 200) {
             this.$toast.add({
@@ -161,13 +163,20 @@ export default {
         });
     },
     hideDialog() {
-      this.sector = new Setor();
+      this.obj = new Frequencia();
       this.submitted = false;
       this.$emit("findAll");
       this.visibleDialog = false;
     },
     getData() {
-      this.sector = this.sectorSelected;
+      this.obj = this.objSelected;
+      this.getAtuacoes();
+    },
+    //TODO: FAZER GETATUACOES COM FILTRO
+    getAtuacoes() {
+      this.sectorService
+        .findAll()
+        .then((data) => (this.atuacoes = data.content));
     },
   },
 };

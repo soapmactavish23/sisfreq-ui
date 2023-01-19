@@ -54,9 +54,7 @@
               />
             </template>
             <template #body="slotProps">
-              {{
-                slotProps.data.funcionario.nome
-              }}
+              {{ slotProps.data.funcionario.nome }}
             </template>
           </Column>
           <Column
@@ -133,7 +131,7 @@
   </div>
 
   <!--MODAL CADASTRAR-->
-  <dialog-form :objSelected="obj" @findAll="findAll" />
+  <dialog-form :objSelected="obj" @findAll="loadLazyData" />
   <!--FIM MODAL CADASTRAR-->
 </template>
 
@@ -227,7 +225,7 @@ export default {
       this.loadLazyData();
     },
     onFilter(event) {
-      this.lazyParams.matricula = event.filters['funcionario.matricula'].value;
+      this.lazyParams.matricula = event.filters["funcionario.matricula"].value;
       this.lazyParams.ano = event.filters.ano.value;
       this.lazyParams.mes = event.filters.mes.value;
       this.loadLazyData();

@@ -23,10 +23,10 @@ export default class Frequecia {
     validations() {
         return {
             documento: {
-                maxLength: maxLength(255),
+
             },
             observacao: {
-                maxLength: maxLength(255),
+
             },
             ano: {
                 required,
@@ -37,29 +37,27 @@ export default class Frequecia {
                 maxLength: maxLength(10),
             },
             enviada: {
-                required,
-                maxLength: maxLength(3),
+
             },
             horarioTrabalho: {
-                maxLength: maxLength(25),
+
             },
             situacao: {
-                maxLength: maxLength(20),
+
             },
             tipoAfastamento: {
-                maxLength: maxLength(10),
+
             },
             dataCadastro: {
-                required,
+
             },
             dataModificacao: {
-                required,
+
             },
             setorOrigem: {
                 required,
             },
             funcionario: {
-                required,
 
             },
         };
