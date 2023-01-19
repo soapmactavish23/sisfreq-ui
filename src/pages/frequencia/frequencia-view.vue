@@ -5,7 +5,7 @@
         <Toolbar class="p-mb-4">
           <template #start>
             <Button
-              label="Novo"
+              label="Gerar"
               icon="pi pi-plus"
               class="mr-2"
               @click="showCreate()"

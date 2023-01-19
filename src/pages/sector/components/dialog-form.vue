@@ -1,5 +1,4 @@
 <template>
-<!-- TODO: Dialog Form frequencia -->
   <Dialog
     v-model:visible="visibleDialog"
     :style="{ width: '480px' }"

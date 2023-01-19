@@ -7,27 +7,27 @@
     @hide="hideDialog"
     class="p-fluid"
   >
-    <div class="field">
-      <label for="atuacao">Atuação</label>
-      <Dropdown
-        id="atuacao"
-        v-model="v$.obj.setorOrigem.$model"
-        :options="atuacoes"
-        optionLabel="nome"
-        placeholder="Selecione a atuação"
-        :class="{ 'p-invalid': submitted && v$.obj.setorOrigem.$invalid }"
-      />
-      <small class="p-error" v-if="submitted && v$.obj.setorOrigem.$invalid"
-        >Atuação é obrigatória.</small
-      >
-    </div>
     <div class="p-fluid formgrid grid p-2">
-      <div class="field col-4 md:col-6">
+      <div class="field col-12">
+        <label for="atuacao">Atuação</label>
+        <Dropdown
+          id="atuacao"
+          v-model="v$.obj.setorOrigem.$model"
+          :options="atuacoes"
+          optionLabel="nome"
+          placeholder="Selecione a atuação"
+          :class="{ 'p-invalid': submitted && v$.obj.setorOrigem.$invalid }"
+        />
+        <small class="p-error" v-if="submitted && v$.obj.setorOrigem.$invalid"
+          >Atuação é obrigatória.</small
+        >
+      </div>
+      <div class="field col-12 md:col-6">
         <label for="ano">Ano</label>
         <InputText
           id="ano"
+          type="number"
           v-model="v$.obj.ano.$model"
-          maxlength="100"
           placeholder="Digite o ano"
           :class="{ 'p-invalid': submitted && v$.obj.ano.$invalid }"
         />
@@ -35,12 +35,12 @@
           >Ano é obrigatório.</small
         >
       </div>
-      <div class="field col-4 md:col-6">
+      <div class="field col-12 md:col-6">
         <label for="mes">Mês</label>
         <InputText
           id="mes"
           v-model="v$.obj.mes.$model"
-          maxlength="100"
+          type="number"
           placeholder="Digite o mês"
           :class="{ 'p-invalid': submitted && v$.obj.mes.$invalid }"
         />
