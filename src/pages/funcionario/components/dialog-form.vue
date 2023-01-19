@@ -7,279 +7,13 @@
     @hide="hideDialog"
   >
     <div class="p-2">
-      <Fieldset legend="Dados pessoais">
-        <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-4">
-            <label for="nome">Nome</label>
-            <InputText
-              id="nome"
-              v-model="v$.obj.nome.$model"
-              maxlength="100"
-              placeholder="Digite o nome "
-              :class="{ 'p-invalid': submitted && v$.obj.nome.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.nome.$invalid"
-              >Nome é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="matricula">Matricula</label>
-            <InputText
-              id="matricula"
-              v-model="v$.obj.matricula.$model"
-              maxlength="15"
-              placeholder="Digite o matricula "
-              :class="{ 'p-invalid': submitted && v$.obj.matricula.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.matricula.$invalid"
-              >Matricula é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="cpf">CPF</label>
-            <InputMask
-              mask="999.999.999-99"
-              id="cpf"
-              v-model="v$.obj.cpf.$model"
-              placeholder="Digite o CPF "
-              :class="{ 'p-invalid': submitted && v$.obj.cpf.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.cpf.$invalid"
-              >CPF é obrigatório.</small
-            >
-          </div>
-        </div>
-      </Fieldset>
+      <fieldset-dados-pessoais :obj="obj" :submitted="submitted" />
       <br />
-      <Fieldset legend="Dados do Vinculo">
-        <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-4">
-            <label for="vinculo">Vinculo</label>
-            <InputText
-              id="vinculo"
-              v-model="v$.obj.vinculo.$model"
-              maxlength="10"
-              type="number"
-              placeholder="Digite o vinculo "
-              :class="{ 'p-invalid': submitted && v$.obj.vinculo.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.vinculo.$invalid"
-              >Vinculo é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="situacao">Situação</label>
-            <Dropdown
-              id="situacao"
-              v-model="v$.obj.situacao.$model"
-              :options="SituacaoFuncionario"
-              optionLabel="name"
-              optionValue="key"
-              placeholder="Selecione uma situação"
-              :class="{ 'p-invalid': submitted && v$.obj.situacao.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.situacao.$invalid"
-              >Situação é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="horarioTrabalho">Horário de Trabalho</label>
-            <InputText
-              id="horarioTrabalho"
-              v-model="v$.obj.horarioTrabalho.$model"
-              maxlength="25"
-              placeholder="Digite o horário de trabalho"
-              :class="{
-                'p-invalid': submitted && v$.obj.horarioTrabalho.$invalid,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.horarioTrabalho.$invalid"
-              >Horário de Trabalho é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6">
-            <label for="atuacao">Atuação</label>
-            <Dropdown
-              id="atuacao"
-              v-model="v$.obj.atuacao.id.$model"
-              placeholder="Selecione um setor"
-              filterPlaceholder="Pesquisar por sigla"
-              :options="setoresAtuacao"
-              optionValue="id"
-              optionLabel="sigla"
-              :virtualScrollerOptions="{
-                lazy: true,
-                onLazyLoad: onLazyLoad,
-                itemSize: 10,
-                showLoader: true,
-                loading: loading,
-                delay: 250,
-              }"
-              @filter="getSetoresAtuacao($event)"
-              :filter="true"
-              :class="{ 'p-invalid': submitted && v$.obj.atuacao.id.$invalid }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.atuacao.id.$invalid"
-              >Atuação é obrigatório.</small
-            >
-          </div>
-
-          <div class="field col-12 md:col-6">
-            <label for="lotacao">Lotação</label>
-            <Dropdown
-              id="lotacao"
-              v-model="v$.obj.lotacao.id.$model"
-              placeholder="Selecione um setor"
-              filterPlaceholder="Pesquisar por sigla"
-              :options="setoresLotacao"
-              optionValue="id"
-              optionLabel="sigla"
-              :virtualScrollerOptions="{
-                lazy: true,
-                onLazyLoad: onLazyLoad,
-                itemSize: 10,
-                showLoader: true,
-                loading: loading,
-                delay: 250,
-              }"
-              @filter="getSectorsLotacao($event)"
-              :filter="true"
-              :class="{ 'p-invalid': submitted && v$.obj.lotacao.id.$invalid }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.lotacao.id.$invalid"
-              >Lotação é obrigatório.</small
-            >
-          </div>
-        </div>
-      </Fieldset>
+      <fieldset-dados-vinculo :obj="obj" :submitted="submitted" />
       <br />
-      <Fieldset legend="Dados Financeiros">
-        <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-4">
-            <label for="banco">Banco</label>
-            <InputText
-              id="banco"
-              v-model="v$.obj.banco.$model"
-              maxlength="20"
-              placeholder="Digite o banco "
-              :class="{ 'p-invalid': submitted && v$.obj.banco.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.banco.$invalid"
-              >Banco é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="agencia">Agência</label>
-            <InputText
-              id="agencia"
-              v-model="v$.obj.agencia.$model"
-              maxlength="10"
-              placeholder="Digite o agência "
-              :class="{ 'p-invalid': submitted && v$.obj.agencia.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.agencia.$invalid"
-              >Agência é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-4">
-            <label for="conta">Conta</label>
-            <InputText
-              id="conta"
-              v-model="v$.obj.conta.$model"
-              maxlength="10"
-              placeholder="Digite o conta "
-              :class="{ 'p-invalid': submitted && v$.obj.conta.$invalid }"
-            />
-            <small class="p-error" v-if="submitted && v$.obj.conta.$invalid"
-              >Conta é obrigatório.</small
-            >
-          </div>
-        </div>
-      </Fieldset>
+      <fieldset-dados-financeiros :obj="obj" :submitted="submitted" />
       <br />
-      <Fieldset legend="Dados de Desligamento">
-        <div class="p-fluid formgrid grid">
-          <div class="field col-12 md:col-6">
-            <label for="agencia">Data de Desligamento</label>
-            <InputText
-              id="agencia"
-              v-model="v$.obj.dataDesligamento.$model"
-              type="date"
-              :class="{
-                'p-invalid': submitted && v$.obj.dataDesligamento.$invalid,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.dataDesligamento.$invalid"
-              >Agência é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6">
-            <label for="tipoAfastamento">Tipo de Afastamento</label>
-            <Dropdown
-              id="tipoAfastamento"
-              v-model="v$.obj.tipoAfastamento.$model"
-              :options="TipoAfastamento"
-              optionLabel="name"
-              optionValue="key"
-              placeholder="Selecione o tipo de afastamento"
-              :showClear="true"
-              :filter="true"
-              :class="{
-                'p-invalid': submitted && v$.obj.tipoAfastamento.$invalid,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.tipoAfastamento.$invalid"
-              >Tipo de Afastamento é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6">
-            <label for="dataInicioAfastamento"
-              >Data de Inicio do Afastamento</label
-            >
-            <InputText
-              id="dataInicioAfastamento"
-              v-model="v$.obj.dataInicioAfastamento.$model"
-              type="date"
-              placeholder="Digite o dataInicioAfastamento "
-              :class="{
-                'p-invalid': submitted && v$.obj.dataInicioAfastamento.$invalid,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.dataInicioAfastamento.$invalid"
-              >Data de Inicio do Afastamento é obrigatório.</small
-            >
-          </div>
-          <div class="field col-12 md:col-6">
-            <label for="dataFimAfastamento">Data de Fim do Afastamento</label>
-            <InputText
-              id="dataFimAfastamento"
-              v-model="v$.obj.dataFimAfastamento.$model"
-              type="date"
-              placeholder="Digite o dataFimAfastamento "
-              :class="{
-                'p-invalid': submitted && v$.obj.dataFimAfastamento.$invalid,
-              }"
-            />
-            <small
-              class="p-error"
-              v-if="submitted && v$.obj.dataFimAfastamento.$invalid"
-              >Data de Fim do Afastamento é obrigatório.</small
-            >
-          </div>
-        </div>
-      </Fieldset>
+      <fieldset-dados-desligamento :obj="obj" :submitted="submitted" />
     </div>
 
     <template #footer>
@@ -310,11 +44,23 @@ import { TipoAfastamento } from "../../../models/enums/tipo_afastamento";
 import FuncionarioService from "../../../service/funcionario/funcionario_service";
 import SectorService from "../../../service/sector/sector_service";
 
+//COMPONENTS
+import FieldsetDadosPessoais from "./fieldset-dados-pessoais.vue";
+import FieldsetDadosDesligamento from "./fieldset-dados-desligamento.vue";
+import FieldsetDadosVinculo from "./fieldset-dados-vinculo.vue";
+
 //VALIDATIONS
 import { useVuelidate } from "@vuelidate/core";
+import FieldsetDadosFinanceiros from "./fieldset-dados-financeiros.vue";
 
 export default {
   props: ["objSelected"],
+  components: {
+    FieldsetDadosPessoais,
+    FieldsetDadosDesligamento,
+    FieldsetDadosVinculo,
+    FieldsetDadosFinanceiros,
+  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -327,7 +73,7 @@ export default {
       setoresAtuacao: [],
       sectorService: new SectorService(),
       SituacaoFuncionario,
-      TipoAfastamento
+      TipoAfastamento,
     };
   },
   validations() {
