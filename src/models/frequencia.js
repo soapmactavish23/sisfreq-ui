@@ -55,7 +55,9 @@ export default class Frequecia {
 
             },
             setorOrigem: {
-                required,
+                id: {
+                    required,
+                }
             },
             funcionario: {
 

@@ -37,7 +37,6 @@
 import Funcionario from "../../../models/funcionario";
 
 //Enums
-import { SituacaoFuncionario } from "../../../models/enums/situacao";
 import { TipoAfastamento } from "../../../models/enums/tipo_afastamento";
 
 //Services
@@ -72,7 +71,6 @@ export default {
       setoresLotacao: [],
       setoresAtuacao: [],
       sectorService: new SectorService(),
-      SituacaoFuncionario,
       TipoAfastamento,
     };
   },

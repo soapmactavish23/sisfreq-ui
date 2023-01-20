@@ -12,13 +12,15 @@
         <label for="atuacao">Atuação</label>
         <Dropdown
           id="atuacao"
-          v-model="v$.obj.setorOrigem.$model"
+          v-model="v$.obj.setorOrigem.id.$model"
           :options="atuacoes"
           optionLabel="nome"
           placeholder="Selecione a atuação"
-          :class="{ 'p-invalid': submitted && v$.obj.setorOrigem.$invalid }"
+          :class="{ 'p-invalid': submitted && v$.obj.setorOrigem.id.$invalid }"
         />
-        <small class="p-error" v-if="submitted && v$.obj.setorOrigem.$invalid"
+        <small
+          class="p-error"
+          v-if="submitted && v$.obj.setorOrigem.id.$invalid"
           >Atuação é obrigatória.</small
         >
       </div>
@@ -85,6 +87,7 @@ export default {
   data() {
     return {
       obj: new Frequecia(),
+      freq: null,
       submitted: false,
       frequeciaService: new FrequenciaService(),
       sectorService: new SectorService(),
@@ -123,13 +126,17 @@ export default {
         return;
       }
     },
-    //TODO: FAZER CREATE FUNCIONAR, VERIFICAR NO ENDPOINT CRIARFREQUENCIAS
     create() {
       this.submitted = true;
+      this.freq = {
+        atuacao: this.obj.setorOrigem.id.id,
+        ano: parseInt(this.obj.ano),
+        mes: parseInt(this.obj.mes),
+      };
       this.frequeciaService
-        .create(this.obj)
+        .createFrequency(this.freq)
         .then((data) => {
-          if (data.status === 201) {
+          if (data.status === 204) {
             this.$toast.add({
               severity: "success",
               summary: "Alerta!",
