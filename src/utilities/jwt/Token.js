@@ -67,6 +67,24 @@ export default class Token extends Config {
       }
     });
   }
+  createFrequency(data) {
+    return new Promise((resolve, reject) => {
+      if (this.accessMethods.c) {
+        const result = axios({
+          method: "post",
+          url: this.api_url + this.pathUrl + "/criar",
+          data: data,
+          withCredentials: true,
+          headers: {
+            Authorization: "Bearer " + this.token(),
+          },
+        });
+        resolve(result);
+      } else {
+        reject("Acesso negado!");
+      }
+    });
+  }
 
   update(data) {
     return new Promise((resolve, reject) => {
