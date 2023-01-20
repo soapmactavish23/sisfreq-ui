@@ -12,15 +12,15 @@ export default class FrequenciaService extends Token {
   }
 
   totalFrequencias() {
-    return this.execute("GET", "/total-frequencias").then((res) => res.data);
+    return this.execute("GET", "/total").then((res) => res.data);
   }
 
   totalFrequenciasOrigemAtuacaoDiferentes() {
-    return this.execute("GET", "/total-frequencias-origem-atuacao-diferentes");
+    return this.execute("GET", "/total-origem-diferente-atuacao").then((res) => res.data);
   }
 
   totalFrequenciasEnviadas() {
-    return this.execute("GET", "/total-frequencias-enviadas");
+    return this.execute("GET", "/total-enviadas").then((res) => res.data);
   }
 
   
