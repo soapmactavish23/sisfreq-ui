@@ -22,5 +22,9 @@ export default class FuncionarioService extends Token {
   totalFuncionariosTipoAfastamento() {
     return this.execute("GET", "/total-por-tipo-afastamento").then((res) => res.data);
   }
+  
+  totalFuncionariosSituacao() {
+    return this.execute("GET", "/total-por-situacao").then((res) => res.data);
+  }
 
 }

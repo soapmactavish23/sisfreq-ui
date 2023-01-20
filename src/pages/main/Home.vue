@@ -76,6 +76,9 @@
         </div>
       </div>
     </div>
+    <div class="col-12 lg:col-6 xl:col-6">
+      <canvas id="chart-total-situacao"></canvas>
+    </div>
   </div>
 </template>
 
@@ -92,12 +95,15 @@ export default {
       totFuncionarios: null,
       totLotacaoAtuacaoDiferentes: null,
       totEnviadas: null,
+      totPorSituacao: null,
     };
   },
   mounted() {
     this.getTotFuncionarios();
     this.getTotLotacaoAtuacaoDiferentes();
     this.getTotFrequencias();
+
+    this.getTotalSituacao();
   },
   methods: {
     getTotFuncionarios() {
@@ -112,9 +118,14 @@ export default {
     },
     getTotFrequencias() {
       this.freqService.totalFrequencias().then((data) => {
-        this.totEnviadas = data
+        this.totEnviadas = data;
+      });
+    },
+    getTotalSituacao() {
+      this.funcionarioService.totalFuncionariosSituacao().then((data) => {
+        console.log(data);
       })
-    }
+    },
   },
 };
 </script>
