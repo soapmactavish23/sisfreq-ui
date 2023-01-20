@@ -108,6 +108,9 @@
 //Models
 import Funcionario from "../../../models/funcionario";
 
+//Enums
+import { SituacaoFuncionario } from "../../../models/enums/situacao";
+
 //Services
 import SectorService from "../../../service/sector/sector_service";
 
@@ -124,6 +127,7 @@ export default {
       setoresLotacao: [],
       setoresAtuacao: [],
       sectorService: new SectorService(),
+      SituacaoFuncionario,
     };
   },
   computed: {
